@@ -1,0 +1,1131 @@
+<?xml version="1.0"?>
+
+
+     
+<robot
+  name="toy_car" xmlns:xacro="https://ros.org/wiki/xacro">
+  
+  <xacro:macro name="base_color">
+    <visual>
+      <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="lidar_color">
+    <visual>
+      <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>0 0 0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="steer_color">
+    <visual>
+      <material>
+          <ambient>0.5 0.5 0.5 1</ambient>
+          <diffuse>0.5 0.5 0.5 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="axle_color">
+    <visual>
+      <material>
+          <ambient>0.75 0.75 0.75 1</ambient>
+          <diffuse>0.75 0.75 0.75 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="tire_color">
+    <visual>
+      <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>0 0 0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="trailer_color">
+    <visual>
+      <material>
+          <ambient>0.5 0.5 0.5 1</ambient>
+          <diffuse>0.5 0.5 0.5 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+  <link name="dummy_link"></link>
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.042568 0.13522 1.3343E-09"
+        rpy="0 0 0" />
+      <mass
+        value="280.75" />
+      <inertia
+        ixx="7.2507"
+        ixy="-0.2876"
+        ixz="9.589E-08"
+        iyy="21.732"
+        iyz="-4.5528E-10"
+        izz="18.194" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="dummy_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="dummy_link"/>
+    <child link="base_link"/>
+  </joint>
+  <link
+    name="lidar_link">
+    <inertial>
+      <origin
+        xyz="0 0.01905 3.4075E-19"
+        rpy="0 0 0" />
+      <mass
+        value="0.078767" />
+      <inertia
+        ixx="2.2232E-05"
+        ixy="-7.3652E-38"
+        ixz="0"
+        iyy="2.5409E-05"
+        iyz="2.6094E-37"
+        izz="2.2232E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5708 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/lidar_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/lidar_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lidar_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0.3175"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="lidar_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_steer_link">
+    <inertial>
+      <origin
+        xyz="0 0.043131 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.075023" />
+      <inertia
+        ixx="0.00017928"
+        ixy="-3.4358E-20"
+        ixz="-5.1901E-11"
+        iyy="1.0082E-05"
+        iyz="7.9416E-21"
+        izz="0.00018832" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/left_steer_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/left_steer_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_steer_joint"
+    type="revolute">
+    <origin
+      xyz="-0.2413 -0.2032 0"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_steer_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.5236"
+      upper="0.5236"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="front_left_axle_link">
+    <inertial>
+      <origin
+        xyz="5.2736E-16 -0.054334 -0.01"
+        rpy="0 0 0" />
+      <mass
+        value="1.036" />
+      <inertia
+        ixx="0.0029361"
+        ixy="-7.7184E-18"
+        ixz="3.8376E-33"
+        iyy="0.0038577"
+        iyz="-4.5393E-19"
+        izz="0.0029361" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/front_left_axle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75 0.75 0.75 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/front_left_axle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_axle_joint"
+    type="continuous">
+    <origin
+      xyz="0 0.01 0"
+      rpy="1.5708 0 -3.1416" />
+    <parent
+      link="left_steer_link" />
+    <child
+      link="front_left_axle_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="front_left_tire_link">
+    <inertial>
+      <origin
+        xyz="-8.3267E-17 2.7756E-17 0.0008"
+        rpy="0 0 0" />
+      <mass
+        value="0.37299" />
+      <inertia
+        ixx="0.0019089"
+        ixy="-2.114E-35"
+        ixz="1.2943E-19"
+        iyy="0.0019089"
+        iyz="-3.4216E-35"
+        izz="0.003329" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/front_left_tire_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/front_left_tire_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_tire_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.05 -0.01"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="front_left_axle_link" />
+    <child
+      link="front_left_tire_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_steer_link">
+    <inertial>
+      <origin
+        xyz="-2.7756E-17 0.06701 2.7756E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.19303" />
+      <inertia
+        ixx="0.00038533"
+        ixy="-5.701E-20"
+        ixz="-9.4666E-11"
+        iyy="2.197E-05"
+        iyz="6.2898E-21"
+        izz="0.0003944" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/right_steer_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/right_steer_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_steer_joint"
+    type="revolute">
+    <origin
+      xyz="-0.2413 0.2032 0"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_steer_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.7854"
+      upper="0.7854"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="front_right_axle_link">
+    <inertial>
+      <origin
+        xyz="-2.7756E-17 -0.054334 -0.01"
+        rpy="0 0 0" />
+      <mass
+        value="1.036" />
+      <inertia
+        ixx="0.0029361"
+        ixy="2.3255E-19"
+        ixz="-8.9177E-35"
+        iyy="0.0038577"
+        iyz="2.9802E-19"
+        izz="0.0029361" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/front_right_axle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75 0.75 0.75 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/front_right_axle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_axle_joint"
+    type="continuous">
+    <origin
+      xyz="0 0.01 0"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="right_steer_link" />
+    <child
+      link="front_right_axle_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="front_right_tire_link">
+    <inertial>
+      <origin
+        xyz="0 2.7756E-17 -0.0008"
+        rpy="0 0 0" />
+      <mass
+        value="0.37299" />
+      <inertia
+        ixx="0.0019089"
+        ixy="-2.114E-35"
+        ixz="-1.2943E-19"
+        iyy="0.0019089"
+        iyz="-3.4216E-35"
+        izz="0.003329" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/front_right_tire_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/front_right_tire_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_tire_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.05 -0.01"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="front_right_axle_link" />
+    <child
+      link="front_right_tire_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="back_left_axle_link">
+    <inertial>
+      <origin
+        xyz="-2.7756E-17 -0.098784 4.7288E-18"
+        rpy="0 0 0" />
+      <mass
+        value="1.036" />
+      <inertia
+        ixx="0.0029361"
+        ixy="-1.4707E-35"
+        ixz="-1.4444E-34"
+        iyy="0.0038577"
+        iyz="-5.055E-20"
+        izz="0.0029361" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/back_left_axle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75 0.75 0.75 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/back_left_axle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_left_axle_joint"
+    type="continuous">
+    <origin
+      xyz="0.2413 -0.15875 0"
+      rpy="-3.1416 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="back_left_axle_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="back_left_tire_link">
+    <inertial>
+      <origin
+        xyz="0 5.2624E-49 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.37299" />
+      <inertia
+        ixx="0.0019089"
+        ixy="-2.114E-35"
+        ixz="1.2943E-19"
+        iyy="0.0019089"
+        iyz="-3.4216E-35"
+        izz="0.003329" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/back_left_tire_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/back_left_tire_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_left_tire_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.09525 0"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="back_left_axle_link" />
+    <child
+      link="back_left_tire_link" />back_left_tire_jointback_left_tire_jointback_left_tire_jointback_left_tire_joint
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="back_right_axle_link">
+    <inertial>
+      <origin
+        xyz="0 -0.098784 -1.6158E-17"
+        rpy="0 0 0" />
+      <mass
+        value="1.036" />
+      <inertia
+        ixx="0.0029361"
+        ixy="-2.0473E-35"
+        ixz="-2.4074E-34"
+        iyy="0.0038577"
+        iyz="4.8509E-20"
+        izz="0.0029361" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/back_right_axle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75 0.75 0.75 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/back_right_axle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_right_axle_joint"
+    type="continuous">
+    <origin
+      xyz="0.2413 0.15875 0"
+      rpy="0 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="back_right_axle_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="back_right_tire_link">
+    <inertial>
+      <origin
+        xyz="-5.5511E-17 -5.2624E-49 5.5511E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.37299" />
+      <inertia
+        ixx="0.0019089"
+        ixy="-2.114E-35"
+        ixz="-1.2943E-19"
+        iyy="0.0019089"
+        iyz="-3.4216E-35"
+        izz="0.003329" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/back_right_tire_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/back_right_tire_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_right_tire_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.09525 0"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="back_right_axle_link" />
+    <child
+      link="back_right_tire_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="trailer_link">
+    <inertial>
+      <origin
+        xyz="-0.40342 0.073058 1.4023E-16"
+        rpy="0 0 0" />
+      <mass
+        value="29.005" />
+      <inertia
+        ixx="0.78342"
+        ixy="-0.0011401"
+        ixz="2.9449E-16"
+        iyy="1.8779"
+        iyz="-4.8707E-17"
+        izz="1.1574" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="trailer_joint"
+    type="continuous">
+    <origin
+      xyz="0.5334 0 0"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="trailer_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="trailer_left_axle_link">
+    <inertial>
+      <origin
+        xyz="-2.2204E-16 -0.098784 2.0201E-17"
+        rpy="0 0 0" />
+      <mass
+        value="1.036" />
+      <inertia
+        ixx="0.0029361"
+        ixy="2.5031E-34"
+        ixz="-9.6296E-35"
+        iyy="0.0038577"
+        iyz="-2.5418E-19"
+        izz="0.0029361" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_left_axle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.875 0.75 0.75 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_left_axle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="trailer_left_axle_joint"
+    type="continuous">
+    <origin
+      xyz="-0.5588 0 -0.19685"
+      rpy="1.5708 0 0" />
+    <parent
+      link="trailer_link" />
+    <child
+      link="trailer_left_axle_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="trailer_left_tire_link">
+    <inertial>
+      <origin
+        xyz="0 8.4929E-18 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.37299" />
+      <inertia
+        ixx="0.0019089"
+        ixy="-6.8102E-36"
+        ixz="-1.2468E-34"
+        iyy="0.0019089"
+        iyz="2.1228E-20"
+        izz="0.003329" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_left_tire_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_left_tire_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="trailer_left_tire_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.09525 0"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="trailer_left_axle_link" />
+    <child
+      link="trailer_left_tire_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="trailer_right_axle_link">
+    <inertial>
+      <origin
+        xyz="0 -0.098784 -1.0618E-17"
+        rpy="0 0 0" />
+      <mass
+        value="1.036" />
+      <inertia
+        ixx="0.0029361"
+        ixy="-1.0336E-19"
+        ixz="-3.402E-34"
+        iyy="0.0038577"
+        iyz="2.0636E-20"
+        izz="0.0029361" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_right_axle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75 0.75 0.75 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_right_axle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="trailer_right_axle_joint"
+    type="continuous">
+    <origin
+      xyz="-0.5588 0 0.19685"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="trailer_link" />
+    <child
+      link="trailer_right_axle_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="trailer_right_tire_link">
+    <inertial>
+      <origin
+        xyz="-2.2204E-16 1.1047E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.37299" />
+      <inertia
+        ixx="0.0019089"
+        ixy="-7.1733E-36"
+        ixz="-1.4678E-34"
+        iyy="0.0019089"
+        iyz="6.9987E-21"
+        izz="0.003329" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_right_tire_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_one/meshes/trailer_right_tire_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="trailer_right_tire_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.09525 0"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="trailer_right_axle_link" />
+    <child
+      link="trailer_right_tire_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <gazebo reference="base_link">
+    <xacro:base_color />
+  </gazebo>
+
+  <gazebo reference="lidar_link">
+    <xacro:lidar_color />
+  </gazebo>
+
+  <gazebo reference="left_steer_link">
+    <xacro:steer_color />
+  </gazebo>
+
+  <gazebo reference="right_steer_link">
+    <xacro:steer_color />
+  </gazebo>
+
+  <gazebo reference="front_left_axle_link">
+    <xacro:axle_color />
+  </gazebo>
+
+  <gazebo reference="front_right_axle_link">
+    <xacro:axle_color />
+  </gazebo>
+
+  <gazebo reference="back_left_axle_link">
+    <xacro:axle_color />
+  </gazebo>
+
+  <gazebo reference="back_right_axle_link">
+    <xacro:axle_color />
+  </gazebo>
+
+  <gazebo reference="trailer_left_axle_link">
+    <xacro:axle_color />
+  </gazebo>
+
+  <gazebo reference="trailer_right_axle_link">
+    <xacro:axle_color />
+  </gazebo>
+
+  <gazebo reference="front_left_tire_link">
+    <xacro:tire_color />
+  </gazebo>
+
+  <gazebo reference="front_right_tire_link">
+    <xacro:tire_color />
+  </gazebo>
+
+  <gazebo reference="back_left_tire_link">
+    <xacro:tire_color />
+  </gazebo>
+
+  <gazebo reference="back_right_tire_link">
+    <xacro:tire_color />
+  </gazebo>
+
+  <gazebo reference="trailer_left_tire_link">
+    <xacro:tire_color />
+  </gazebo>
+
+  <gazebo reference="trailer_right_tire_link">
+    <xacro:tire_color />
+  </gazebo>
+
+  <gazebo reference="trailer_link">
+    <xacro:trailer_color />
+  </gazebo>
+  
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+
+    <!-- Velocity Controllers -->
+    <joint name="back_left_axle_joint">
+      <command_interface name="velocity">
+        <param name="min">-1000.0</param>
+        <param name="max">1000.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="back_right_axle_joint">
+      <command_interface name="velocity">
+        <param name="min">-1000.0</param>
+        <param name="max">1000.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- Position Controller -->
+    <joint name="left_steer_joint">
+      <command_interface name="position">
+        <param name="min">-3.14</param>
+        <param name="max">3.14</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="right_steer_joint">
+      <command_interface name="position">
+        <param name="min">-3.14</param>
+        <param name="max">3.14</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find project_one)/config/control.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="lidar_link">
+    <sensor name="lidar" type="ray">
+      <pose>0.0 0.0 0.0 0 0 0</pose>
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1.00000</resolution>
+            <min_angle>0.000000</min_angle>
+            <max_angle>6.280000</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.120000</min>
+          <max>3.5</max>
+          <resolution>0.015000</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="scan" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <remapping>~/out:=scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>lidar_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
