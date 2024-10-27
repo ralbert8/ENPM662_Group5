@@ -116,6 +116,12 @@ def generate_launch_description():
         arguments=["position_controller", "--controller-manager", "/controller_manager"],
     )
 
+    dummy_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["dummy_controller", "--controller-manager", "/controller_manager"],
+    )
+
     # Delay start of robot_controller after `joint_state_broadcaster`
     delay_robot_postion_controller_spawner_after_joint_state_broadcaster_spawner = RegisterEventHandler(
         event_handler=OnProcessExit(
@@ -129,6 +135,14 @@ def generate_launch_description():
         event_handler=OnProcessExit(
             target_action=joint_state_broadcaster_spawner,
             on_exit=[robot_velocity_controller_spawner],
+        )
+    )
+
+    # Delay start of robot_controller after 'joint_state_broadcaster'
+    delay_dummy_controller_spawner_after_joint_state_broadcaster = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_state_broadcaster_spawner,
+            on_exit=[dummy_controller_spawner],
         )
     )
 
@@ -155,6 +169,7 @@ def generate_launch_description():
             joint_state_broadcaster_spawner,
             delay_robot_postion_controller_spawner_after_joint_state_broadcaster_spawner,
             delay_robot_velocity_controller_spawner_after_joint_state_broadcaster_spawner,
+            delay_dummy_controller_spawner_after_joint_state_broadcaster,
             tf
         ]
     )

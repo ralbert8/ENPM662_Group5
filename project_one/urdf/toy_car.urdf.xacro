@@ -1084,6 +1084,28 @@
       <state_interface name="velocity"/>
     </joint>
 
+    <!-- Dummy Controller for Passive Joints -->
+    <joint name="front_left_axle_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="front_right_axle_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="trailer_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="trailer_left_axle_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="trailer_right_axle_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
   </ros2_control>
 
   <gazebo>
