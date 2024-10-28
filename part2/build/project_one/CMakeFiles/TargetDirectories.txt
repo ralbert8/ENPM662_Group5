@@ -1,0 +1,9 @@
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/uninstall.dir
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/project_one_uninstall.dir
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/test.dir
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/edit_cache.dir
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/rebuild_cache.dir
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/list_install_components.dir
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/install.dir
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/install/local.dir
+/home/carissa/Desktop/part2/build/project_one/CMakeFiles/install/strip.dir
