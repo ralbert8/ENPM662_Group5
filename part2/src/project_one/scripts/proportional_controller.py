@@ -351,8 +351,13 @@ def main(args=None):
     # plt.grid()
     # plt.show()
     
-    node.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(node) # spin the node
+    except KeyboardInterrupt:
+        node.get_logger().info("KeyboardInterrupt")
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
     
     
 
