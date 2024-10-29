@@ -1,6 +1,0 @@
-Invoking command in '/home/carissa/Desktop/part2/build/project_one': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/carissa/Desktop/part2/src/project_one -DCMAKE_INSTALL_PREFIX=/home/carissa/Desktop/part2/install/project_one
-Invoked command in '/home/carissa/Desktop/part2/build/project_one' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/carissa/Desktop/part2/src/project_one -DCMAKE_INSTALL_PREFIX=/home/carissa/Desktop/part2/install/project_one
-Invoking command in '/home/carissa/Desktop/part2/build/project_one': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/carissa/Desktop/part2/build/project_one -- -j20 -l20
-Invoked command in '/home/carissa/Desktop/part2/build/project_one' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/carissa/Desktop/part2/build/project_one -- -j20 -l20
-Invoking command in '/home/carissa/Desktop/part2/build/project_one': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/carissa/Desktop/part2/build/project_one
-Invoked command in '/home/carissa/Desktop/part2/build/project_one' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/carissa/Desktop/part2/build/project_one
