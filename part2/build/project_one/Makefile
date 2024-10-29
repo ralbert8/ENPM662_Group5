@@ -197,6 +197,43 @@ project_one_uninstall/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/project_one_uninstall.dir/build.make CMakeFiles/project_one_uninstall.dir/build
 .PHONY : project_one_uninstall/fast
 
+#=============================================================================
+# Target rules for targets named odometry_plugin
+
+# Build rule for target.
+odometry_plugin: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 odometry_plugin
+.PHONY : odometry_plugin
+
+# fast build rule for target.
+odometry_plugin/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/odometry_plugin.dir/build.make CMakeFiles/odometry_plugin.dir/build
+.PHONY : odometry_plugin/fast
+
+src/odometry_plugin.o: src/odometry_plugin.cpp.o
+.PHONY : src/odometry_plugin.o
+
+# target to build an object file
+src/odometry_plugin.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/odometry_plugin.dir/build.make CMakeFiles/odometry_plugin.dir/src/odometry_plugin.cpp.o
+.PHONY : src/odometry_plugin.cpp.o
+
+src/odometry_plugin.i: src/odometry_plugin.cpp.i
+.PHONY : src/odometry_plugin.i
+
+# target to preprocess a source file
+src/odometry_plugin.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/odometry_plugin.dir/build.make CMakeFiles/odometry_plugin.dir/src/odometry_plugin.cpp.i
+.PHONY : src/odometry_plugin.cpp.i
+
+src/odometry_plugin.s: src/odometry_plugin.cpp.s
+.PHONY : src/odometry_plugin.s
+
+# target to generate assembly for a file
+src/odometry_plugin.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/odometry_plugin.dir/build.make CMakeFiles/odometry_plugin.dir/src/odometry_plugin.cpp.s
+.PHONY : src/odometry_plugin.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -212,6 +249,10 @@ help:
 	@echo "... test"
 	@echo "... project_one_uninstall"
 	@echo "... uninstall"
+	@echo "... odometry_plugin"
+	@echo "... src/odometry_plugin.o"
+	@echo "... src/odometry_plugin.i"
+	@echo "... src/odometry_plugin.s"
 .PHONY : help
 
 

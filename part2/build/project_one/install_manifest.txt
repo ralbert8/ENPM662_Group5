@@ -55,9 +55,13 @@
 /home/carissa/Desktop/part2/install/project_one/share/project_one//scripts/proportional_controller.py
 /home/carissa/Desktop/part2/install/project_one/share/project_one//scripts/teleop.pyZone.Identifier
 /home/carissa/Desktop/part2/install/project_one/share/project_one//scripts/teleop.py
+/home/carissa/Desktop/part2/install/project_one/share/project_one//src/odometry_plugin.cpp
 /home/carissa/Desktop/part2/install/project_one/lib/project_one/robot_description_publisher.py
 /home/carissa/Desktop/part2/install/project_one/lib/project_one/teleop.py
 /home/carissa/Desktop/part2/install/project_one/lib/project_one/proportional_controller.py
+/home/carissa/Desktop/part2/install/project_one/share/project_one/environment/library_path.sh
+/home/carissa/Desktop/part2/install/project_one/share/project_one/environment/library_path.dsv
+/home/carissa/Desktop/part2/install/project_one/lib/libodometry_plugin.so
 /home/carissa/Desktop/part2/install/project_one/share/ament_index/resource_index/package_run_dependencies/project_one
 /home/carissa/Desktop/part2/install/project_one/share/ament_index/resource_index/parent_prefix_path/project_one
 /home/carissa/Desktop/part2/install/project_one/share/project_one/environment/ament_prefix_path.sh
@@ -70,6 +74,7 @@
 /home/carissa/Desktop/part2/install/project_one/share/project_one/local_setup.dsv
 /home/carissa/Desktop/part2/install/project_one/share/project_one/package.dsv
 /home/carissa/Desktop/part2/install/project_one/share/ament_index/resource_index/packages/project_one
+/home/carissa/Desktop/part2/install/project_one/share/project_one/cmake/ament_cmake_export_libraries-extras.cmake
 /home/carissa/Desktop/part2/install/project_one/share/project_one/cmake/project_oneConfig.cmake
 /home/carissa/Desktop/part2/install/project_one/share/project_one/cmake/project_oneConfig-version.cmake
 /home/carissa/Desktop/part2/install/project_one/share/project_one/package.xml

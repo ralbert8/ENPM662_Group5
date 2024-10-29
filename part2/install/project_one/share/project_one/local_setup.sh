@@ -152,6 +152,7 @@ fi
 
 # list all environment hooks of this package
 ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/project_one/environment/ament_prefix_path.sh"
+ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/project_one/environment/library_path.sh"
 ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/project_one/environment/path.sh"
 
 # source all shell-specific environment hooks of this package
