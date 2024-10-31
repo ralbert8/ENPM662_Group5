@@ -23,9 +23,9 @@ class ProportionalControlNode(Node):
         self.actual_theta = 0
         self.actual_vel_x = 0.0
         self.actual_vel_y = 0.0
-        self.k_p          = 0.5
-        self.k_t          = 1 
-        self._goal_x      = 10.0 
+        self.k_v          = 0.8
+        self.k_t          = 1.8
+        self._goal_x      = 10.0
         self._goal_y      = 10.0
         self._goal_reached = False
         
@@ -133,7 +133,7 @@ class ProportionalControlNode(Node):
             w += 2 * math.pi
 
         # Proportional control for angular velocity, with limit for turtlebot max angular velocity
-        angular_velocity = self.k_p * w
+        angular_velocity = self.k_v * w
         
         if angular_velocity > 0 and angular_velocity > max_steering_angle:
             angular_velocity = max_steering_angle
@@ -181,13 +181,13 @@ class ProportionalControlNode(Node):
         print("Robot Heading Angle [degrees]: ", np.degrees(self.actual_theta))
         dy= self._goal_y - self.actual_y
         dx= self._goal_x - self.actual_x
-        angle_to_goal = math.atan2(dx, dy)
+        angle_to_goal = math.atan2(dy, dx)
         print("Angle to Goal from Current Position [degrees]: ",np.degrees(angle_to_goal))
         theta_err = angle_to_goal- self.actual_theta
         print("Heading Error [degrees]: ",np.degrees(theta_err))
         steer_angle_vel = self.calculate_angular_velocity(theta_err)
         
-        prop_control_lin_vel = self.k_p * lin_vel_err_mag 
+        prop_control_lin_vel = self.k_v * lin_vel_err_mag 
         prop_control_ang_vel = self.k_t * steer_angle_vel
                 
         self.t.append(datetime.now())
@@ -230,9 +230,9 @@ class ProportionalControlNode(Node):
             
         plt.legend()
         plt.grid()
+        plt.savefig("part2_pose_plot.png")
         plt.show()
-        plt.savefig("./part2_pose_plot.png")
-            
+
        
 def main(args=None):
     
@@ -253,7 +253,6 @@ def main(args=None):
         node.plot_pose()
     finally:
         node.destroy_node()
-        rclpy.shutdown()
         
 if __name__ == '__main__':
     main()
