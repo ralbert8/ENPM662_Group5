@@ -61,7 +61,6 @@ class ProportionalControlNode(Node):
         #quaternion conversion to get yaw angle of car
         self.actual_theta = math.atan2(2 * (ort.w * ort.z + ort.x * ort.y), 1 - 2 * (ort.y**2 + ort.z**2)) 
         
-        
     def velocity_callback(self, msg: Twist):
         self.actual_vel_x = msg.linear.x
         self.actual_vel_y = msg.linear.y
@@ -73,7 +72,7 @@ class ProportionalControlNode(Node):
         print("\n")
         
         if self._goal_reached:
-            self.get_logger().info("Goal already reached.")
+            self.get_logger().info("Goal already reached. Press ctrl+c to exit and plot.")
             return
 
         self.get_logger().info(f"Executing goal: ({self._goal_x},{self._goal_y})")
