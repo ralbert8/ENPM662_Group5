@@ -147,17 +147,6 @@ class ProportionalControlNode(Node):
         """
         
         self._goal_reached=True
-        
-        msg = String()
-        msg.data = "******************************************"
-        self.goal_pub.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
-        msg.data = "Control Loop Complete. Stopping Robot..."
-        self.goal_pub.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
-        msg.data = "******************************************"
-        self.goal_pub.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
     
         steer_angle         = 0.0
         lin_vel_right_wheel = 0.0
@@ -180,6 +169,19 @@ class ProportionalControlNode(Node):
         self.get_logger().info(f'Publishing Velocity Command: {list(self.wheel_velocities.data)}')
         self.get_logger().info(f'Publishing Steering Command: {list(self.joint_positions.data)}')
                      
+                     
+        msg = String()
+        msg.data = "******************************************"
+        self.goal_pub.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        msg.data = "Control Loop Complete. Stopping Robot..."
+        self.goal_pub.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        msg.data = "******************************************"
+        self.goal_pub.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        
+        
     def adjust_robot_motion(self):  
         """
         make incremental adjustments to robot velocity and heading
