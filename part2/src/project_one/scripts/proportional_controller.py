@@ -4,13 +4,13 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist, PoseStamped
 from std_msgs.msg import Float64MultiArray
-from sensor_msgs.msg import JointState
 import numpy as np
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 import matplotlib.pyplot as plt
 import math
 from datetime import datetime
+from std_msgs.msg import String
 
 class ProportionalControlNode(Node):
 
@@ -24,7 +24,7 @@ class ProportionalControlNode(Node):
         self.actual_vel_x = 0.0
         self.actual_vel_y = 0.0
         self.k_v          = 0.8
-        self.k_t          = 1.8
+        self.k_t          = 2.8
         self._goal_x      = 10.0
         self._goal_y      = 10.0
         self._goal_reached = False
@@ -32,25 +32,26 @@ class ProportionalControlNode(Node):
         #Publishers
         self.joint_position_pub   = self.create_publisher(Float64MultiArray, '/position_controller/commands', 10)
         self.wheel_velocities_pub = self.create_publisher(Float64MultiArray, '/velocity_controller/commands', 10)
-        self.joint_state_pub      = self.create_publisher(JointState,        '/joint_states', 10)
+        self.goal_pub             = self.create_publisher(String,            '/goal_flag', 10)
         
         #Subscriber for odom data
         self._mutex_cbg = MutuallyExclusiveCallbackGroup()
-        self.odom_sub   = self.create_subscription(PoseStamped, '/odom', self.odom_callback, 10, callback_group=self._mutex_cbg)
-        self.odom_sub   = self.create_subscription(Twist,   '/velocity', self.velocity_callback, 10, callback_group=self._mutex_cbg)
+        self.odom_sub   = self.create_subscription(PoseStamped, '/odom',     self.odom_callback,     10, callback_group=self._mutex_cbg)
+        self.vel_sub    = self.create_subscription(Twist,       '/velocity', self.velocity_callback, 10, callback_group=self._mutex_cbg)
 
         # Initialize command methods and arrays to track robot    
         self.joint_positions  = Float64MultiArray() #front-axle steering
         self.wheel_velocities = Float64MultiArray() #rear-wheel drive
         self.steer_angles     = []
         self.right_vels       = []
-        self.left_vels        = []  
+        self.left_vels        = []
         self.x_vals           = []
         self.y_vals           = []
-        self.t                = []      
+        self.theta_vals       = []
+        self.t                = []  
         
         #timer
-        self._timer = self.create_timer(1, self.timer_callback)
+        self._timer = self.create_timer(0.1, self.timer_callback)
 
     def odom_callback(self, msg: PoseStamped):
         
@@ -75,12 +76,12 @@ class ProportionalControlNode(Node):
             self.get_logger().info("Goal already reached. Press ctrl+c to exit and plot.")
             return
 
-        self.get_logger().info(f"Executing goal: ({self._goal_x},{self._goal_y})")
+        # self.get_logger().info(f"Executing goal: ({self._goal_x},{self._goal_y})")
 
         while rclpy.ok():  # While ROS is running
             
             distance_to_goal = math.sqrt((self._goal_x - self.actual_x) ** 2 + (self._goal_y - self.actual_y) ** 2)
-            print("Distance to goal: ",distance_to_goal)
+            # print("Distance to goal: ",distance_to_goal)
             
             if distance_to_goal < 2:
                 self.stop_robot()
@@ -90,8 +91,6 @@ class ProportionalControlNode(Node):
                 self.stop_robot()
                 return
             else:
-                self.x_vals.append(self.actual_x)
-                self.y_vals.append(self.actual_y)
                 self.adjust_robot_motion()
         
     def compute_distance_to_goal(self):
@@ -149,24 +148,37 @@ class ProportionalControlNode(Node):
         
         self._goal_reached=True
         
-        print("******************************************")
-        print("Control Loop Complete. Stopping Robot...")
-        print("******************************************")                        
+        msg = String()
+        msg.data = "******************************************"
+        self.goal_pub.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        msg.data = "Control Loop Complete. Stopping Robot..."
+        self.goal_pub.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        msg.data = "******************************************"
+        self.goal_pub.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+    
         steer_angle         = 0.0
         lin_vel_right_wheel = 0.0
         lin_vel_left_wheel  = 0.0
         self.t.append(datetime.now())
+        self.theta_vals.append(np.degrees(self.actual_theta))
+        self.x_vals.append(self.actual_x)
+        self.y_vals.append(self.actual_y)        
         self.steer_angles.append(np.degrees(steer_angle))
         self.right_vels.append(lin_vel_right_wheel)
-        self.left_vels.append(lin_vel_left_wheel)                
-        print("Commanded Steering Angle: ",steer_angle)
-        print("Commanded Right & Left Wheel Velocity: ",-lin_vel_right_wheel,", ",lin_vel_left_wheel)
+        self.left_vels.append(-lin_vel_left_wheel)                
+        # print("Commanded Steering Angle: ",steer_angle)
+        # print("Commanded Right & Left Wheel Velocity: ",-lin_vel_right_wheel,", ",lin_vel_left_wheel)
         
         # Publish the stop commands
         self.wheel_velocities.data = [-lin_vel_left_wheel,lin_vel_right_wheel]
         self.joint_positions.data  = [steer_angle,steer_angle]
         self.joint_position_pub.publish(self.joint_positions)
         self.wheel_velocities_pub.publish(self.wheel_velocities)
+        self.get_logger().info(f'Publishing Velocity Command: {list(self.wheel_velocities.data)}')
+        self.get_logger().info(f'Publishing Steering Command: {list(self.joint_positions.data)}')
                      
     def adjust_robot_motion(self):  
         """
@@ -174,37 +186,45 @@ class ProportionalControlNode(Node):
         """              
                 
         # ODOM Postion error calculations
-        print("Robot Position X: ", self.actual_x)
-        print("Robot Position Y: ", self.actual_y)
+        # print("Robot Position X: ", self.actual_x)
+        # print("Robot Position Y: ", self.actual_y)
         lin_vel_err_mag = self.compute_distance_to_goal()
         
-        print("Robot Heading Angle [degrees]: ", np.degrees(self.actual_theta))
+        # print("Robot Heading Angle [degrees]: ", np.degrees(self.actual_theta))
         dy= self._goal_y - self.actual_y
         dx= self._goal_x - self.actual_x
         angle_to_goal = math.atan2(dy, dx)
-        print("Angle to Goal from Current Position [degrees]: ",np.degrees(angle_to_goal))
+        # print("Angle to Goal from Current Position [degrees]: ",np.degrees(angle_to_goal))
         theta_err = angle_to_goal- self.actual_theta
-        print("Heading Error [degrees]: ",np.degrees(theta_err))
+        # print("Heading Error [degrees]: ",np.degrees(theta_err))
         steer_angle_vel = self.calculate_angular_velocity(theta_err)
         
         prop_control_lin_vel = self.k_v * lin_vel_err_mag 
         prop_control_ang_vel = self.k_t * steer_angle_vel
                 
         self.t.append(datetime.now())
+        self.theta_vals.append(np.degrees(self.actual_theta))
+        self.x_vals.append(self.actual_x)
+        self.y_vals.append(self.actual_y)
         self.steer_angles.append(np.degrees(prop_control_ang_vel))
         self.right_vels.append(prop_control_lin_vel)
-        self.left_vels.append(prop_control_lin_vel)
+        self.left_vels.append(-prop_control_lin_vel)
 
-        print("Commanded Steering Angle: ",np.degrees(prop_control_ang_vel))
-        print("Commanded Right & Left Wheel Velocity: ",-prop_control_lin_vel,", ",prop_control_lin_vel)
+        # print("Commanded Steering Angle: ",np.degrees(prop_control_ang_vel))
+        # print("Commanded Right & Left Wheel Velocity: ",-prop_control_lin_vel,", ",prop_control_lin_vel)
         # Publish the command
         self.wheel_velocities.data = [-prop_control_lin_vel,prop_control_lin_vel] 
         self.joint_positions.data  = [prop_control_ang_vel,prop_control_ang_vel] 
 
         self.joint_position_pub.publish(self.joint_positions)
         self.wheel_velocities_pub.publish(self.wheel_velocities)
-        
+        self.get_logger().info(f'Publishing Velocity Command: {list(self.wheel_velocities.data)}')
+        self.get_logger().info(f'Publishing Steering Command: {list(self.joint_positions.data)}')
+
     def plot_pose(self):
+        """
+        plot data regarding robot control / travel
+        """
                     
         # Plot commanded positions / velocities over time
         plt.figure()
@@ -216,10 +236,10 @@ class ProportionalControlNode(Node):
     
         
         plt.subplot(2, 2, 2)
-        plt.scatter(self.x_vals, self.y_vals, label='Car X-Y Positions')
-        plt.xlabel('X-coordinate (meters)')
-        plt.ylabel('Y-coordinate (meters)')
-        plt.title('Robot Position over Time')
+        plt.plot(self.t, self.theta_vals, label='Car Steering Angle Positions')
+        plt.xlabel('Time (seconds)')
+        plt.ylabel('Steering Angle (degrees)')
+        plt.title('Robot Steering Angle over Time')
         
         plt.subplot(2, 2, 3)    
         plt.plot(self.t, self.right_vels, label='Commanded RIGHT Wheel Velocity')
@@ -227,7 +247,13 @@ class ProportionalControlNode(Node):
         plt.xlabel('Time (seconds)')
         plt.ylabel('Linear Velocity (m/s)')
         plt.title('Commanded Wheel Velocities over Time')  
-            
+        
+        plt.subplot(2, 2, 4)
+        plt.scatter(self.x_vals, self.y_vals, label='Car X-Y Positions')
+        plt.xlabel('X-coordinate (meters)')
+        plt.ylabel('Y-coordinate (meters)')
+        plt.title('Robot Position over Time')
+        
         plt.legend()
         plt.grid()
         plt.savefig("part2_pose_plot.png")
@@ -236,6 +262,10 @@ class ProportionalControlNode(Node):
        
 def main(args=None):
     
+    """
+    Node operation - startup and shutdown, and plotting
+    
+    """
     # Start Node and Controller
     print("******************************************")
     print("Proportional Controller Node Starting...")
