@@ -1,5 +1,5 @@
 # ENPM662-Group 5 Riley Albert, Alex Hall and Carissa Arillo
-
+!!!Use the package inside of final_package!!!
 %% Part 1:
 If you place the config file in the <root workspace>/install/project_one/share/project_one/rviz/ folder, then the LaserScan will be setup correctly upon starting up Rviz with the display_part1.launch.py file. 
 
