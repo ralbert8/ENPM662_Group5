@@ -35,3 +35,6 @@ source install/setup.bash
 ros2 run project_one proportional_controller.py
 
 observe the movement of the car, when you ctrl + c in the terminal the plots will appear.
+
+Additional note: 
+See youtube links in report for videos, part 2 is too big to copy to git. 
