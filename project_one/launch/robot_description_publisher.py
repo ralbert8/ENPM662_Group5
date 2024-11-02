@@ -19,7 +19,7 @@ class RobotDescPub(Node):
         parser.add_argument('-xml_string', required=True, type=str, metavar='XML_URDF_XACRO',
                             help='Stringified xml data from urdf or xacro describing the robot')
         parser.add_argument('-robot_description_topic', type=str, default='/robot_description', metavar='ROBOT_DESCRIPTION_TOPIC',
-                            help='Name of topic where the robot description from xml data will be published')
+                            help='Name of topic where the robot rescription from xml data will be published')
 
         self.args = parser.parse_args(args[1:])
 
@@ -33,7 +33,7 @@ class RobotDescPub(Node):
         # create the publisher object
         latched_qos = QoSProfile(
             depth=1,
-            durability=QoSDurabilityPolicy.TRANSIENT_LOCAL)
+            durability=QoSDurabilityPolicy.RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL)
         self.publisher_ = self.create_publisher(
             String, '/robot_description', latched_qos)
 

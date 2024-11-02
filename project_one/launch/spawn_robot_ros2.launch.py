@@ -25,7 +25,7 @@ def generate_launch_description():
     # [X, Y, Z]
     position = [0.0, 0.0, 0.125]
     # [Roll, Pitch, Yaw]
-    orientation = [0.0, 0.0, 0.0]
+    orientation = [0.0, 0.0, 3.14]
     # Base Name or robot
     robot_base_name = "toy_car"
     ####### DATA INPUT END ##########
@@ -138,7 +138,6 @@ def generate_launch_description():
         )
     )
 
-    # Delay start of robot_controller after 'joint_state_broadcaster'
     delay_dummy_controller_spawner_after_joint_state_broadcaster = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=joint_state_broadcaster_spawner,
