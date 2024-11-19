@@ -1,4 +1,4 @@
-# ENPM662-Group 5 Riley Albert, Alex Hall and Carissa Arillo
+# Project 1 ENPM662-Group 5 Riley Albert, Alex Hall and Carissa Arillo
 %% Part 1 Teleop:
 If you place the config file in the <root workspace>/install/project_one/share/project_one/rviz/ folder, then the LaserScan will be setup correctly upon starting up Rviz with the display_part1.launch.py file. 
 
@@ -33,7 +33,20 @@ ros2 run project_one pose_subscriber.py
 source install/setup.bash
 ros2 run project_one proportional_controller.py
 
+
 observe the movement of the car, when you ctrl + c in the terminal the plots will appear.
 
-Additional note: 
-See youtube links in report for videos, part 2 is too big to copy to git. 
+# Project 2 ENPM662-Group 5 Riley Albert, Alex Hall and Carissa Arillo
+## Part 1 Image Processing
+### To run part 1, do the following:
+1. In a terminal window in the root workspace, build the workspace using: colcon build, source install/setup.bash
+2. Run the image processing node using: ros2 run project_two image_proccessing.py. This will output a .csv to <root workspace>/install/project_two/share/project_two/csv/contours.csv
+## Part 2 Inverse Kinematics
+### To run part 2, do the following:
+1. Run the inverse kinematics node using: ros2 run project_two inverse_kinematics.py. This will plot the end effector path, output the pose to the terminal, and output a .csv to <root workspace>/install/project_two/share/project_two/csv/joint_angles.csv ** NOTE: Avoid running this node with Gazebo open. It severely slows down the process.
+## Part 3 Gazebo Environment
+### To launch Gazebo, do the following:
+1. Launch Gazebo using: ros2 launch project_two gazebo.launch.py
+## Part 4 Joint Angle Publisher
+### To run part 4, do the following
+1. Run joint angle publisher node using: ros2 run project_two joint_angle_publisher.py. This will move the robot arm according to the joint angles in the .csv generated in part 2.
