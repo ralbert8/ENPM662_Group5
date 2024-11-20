@@ -78,6 +78,6 @@ def extract_and_scale_contours_yz(package_name, relative_csv_path, relative_imag
 
 if __name__ == "__main__":
     package_name = "project_two"
-    relative_csv_path = "csv/joint_contours.csv"
+    relative_csv_path = "csv/contours.csv"
     relative_image_path = "images/fish2.png"
     extract_and_scale_contours_yz(package_name, relative_csv_path, relative_image_path)
