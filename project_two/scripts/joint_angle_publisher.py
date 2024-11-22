@@ -60,6 +60,8 @@ class JointAnglePublisher(Node):
 
         # Pull Current Angles from Storage
         angles = self.joint_angles[self.current_index]
+        angles[3] = -angles[3]
+        angles[4] = -angles[4]
 
         # Publish Data
         msg = Float64MultiArray()

@@ -77,10 +77,10 @@ for A in A_matrices:
 parameter_substitutions = {
     a2: 0.425,
     a3: 0.39225,
-    d1: 0.1625,
-    d4: 0.09465,
-    d5: 0.09465,
-    d6: 0.0815
+    d1: 0.58365,
+    d4: 0.1099,
+    d5: 0.09065,
+    d6: 0.2002
 }
 
 # Define Forward Kinematics of Robot
@@ -268,7 +268,7 @@ with open(input_file, mode="r") as file:
     rows = list(reader)
 
 for row in rows:
-    move_time = 0.02
+    move_time = 0.02 
 
     current_position, current_orientation = forward_kinematics(*current_joints)
 

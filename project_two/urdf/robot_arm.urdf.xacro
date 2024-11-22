@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="robot_arm" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!-- Gazebo Color Plugins -->
   <xacro:macro name="body_color">
     <visual>
       <material>
@@ -21,22 +26,45 @@
       </material>
     </visual>
   </xacro:macro>
+  <xacro:macro name="base_color">
+    <visual>
+      <material>
+        <ambient>0.41569 0.67451 1 1</ambient>
+        <diffuse>0.41569 0.67451 1 1</diffuse>
+        <specular>0.1 0.1 0.1 1</specular>
+        <emissive>0 0 0 0</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+  <xacro:macro name="tool_color">
+    <visual>
+      <material>
+        <ambient>0.19608 0.19608 0.19608 1</ambient>
+        <diffuse>0.19608 0.19608 0.19608 1</diffuse>
+        <specular>0.1 0.1 0.1 1</specular>
+        <emissive>0 0 0 0</emissive>
+      </material>
+    </visual>
+  </xacro:macro>
+
+  <!-- World Link for Fixed Base -->
   <link name="world" />
+
   <link
     name="base_link">
     <inertial>
       <origin
-        xyz="0.000818930716522579 -0.000818930139439305 0.0140278111957652"
+        xyz="2.9549E-17 -0.00030197 0.11134"
         rpy="0 0 0" />
       <mass
-        value="0.365058052116186" />
+        value="17.843" />
       <inertia
-        ixx="0.00051380644225505"
-        ixy="-1.25381433478329E-05"
-        ixz="3.47062873674803E-08"
-        iyy="0.000513806425545493"
-        iyz="-3.47077199058619E-08"
-        izz="0.000833137426033134" />
+        ixx="0.87104"
+        ixy="-3.2142E-07"
+        ixz="-9.442E-18"
+        iyy="0.48766"
+        iyz="0.00055476"
+        izz="0.98951" />
     </inertial>
     <visual>
       <origin
@@ -49,7 +77,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.41569 0.67451 1 1" />
       </material>
     </visual>
     <collision>
@@ -62,25 +90,134 @@
       </geometry>
     </collision>
   </link>
+
+  <!-- World Joint For Fixed Base -->
   <joint name="fixed_base" type="fixed">
     <parent link="world" />
     <child link="base_link" />
+  </joint>
+
+  <link
+    name="camera_link">
+    <inertial>
+      <origin
+        xyz="-3.8492E-19 0.0043066 -0.0086877"
+        rpy="0 0 0" />
+      <mass
+        value="0.011" />
+      <inertia
+        ixx="1.206E-06"
+        ixy="1.0009E-22"
+        ixz="-5.0667E-23"
+        iyy="1.4269E-06"
+        iyz="8.5819E-08"
+        izz="1.3248E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_two/meshes/camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.19608 0.19608 0.19608 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_two/meshes/camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.120050000000001 0.2983"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="link_0">
+    <inertial>
+      <origin
+        xyz="0.00081893 -0.00081893 0.50768"
+        rpy="0 0 0" />
+      <mass
+        value="0.36506" />
+      <inertia
+        ixx="0.00051381"
+        ixy="-1.2538E-05"
+        ixz="3.4706E-08"
+        iyy="0.00051381"
+        iyz="-3.4708E-08"
+        izz="0.00083314" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_two/meshes/link_0.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_two/meshes/link_0.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_0"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_0" />
+    <axis
+      xyz="0 0 0" />
   </joint>
   <link
     name="link_1">
     <inertial>
       <origin
-        xyz="-2.01994143885152E-08 0.0147276350283187 0.0810226747554533"
+        xyz="-1.7916E-08 0.014728 0.57467"
         rpy="0 0 0" />
       <mass
-        value="1.21747724894722" />
+        value="1.2175" />
       <inertia
-        ixx="0.00255263718574973"
-        ixy="7.20416731900228E-09"
-        ixz="-3.70618686006579E-09"
-        iyy="0.00210897804842468"
-        iyz="-0.000297852263493"
-        izz="0.00266305849374601" />
+        ixx="0.0025526"
+        ixy="5.0045E-09"
+        ixz="5.1533E-10"
+        iyy="0.002109"
+        iyz="-0.00029785"
+        izz="0.0026631" />
     </inertial>
     <visual>
       <origin
@@ -93,7 +230,7 @@
       <material
         name="">
         <color
-          rgba="0.796078431372549 0.819607843137255 0.933333333333333 1" />
+          rgba="0.79608 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
@@ -113,7 +250,7 @@
       xyz="0 0 0"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="link_0" />
     <child
       link="link_1" />
     <axis
@@ -123,23 +260,26 @@
       upper="3.1416"
       effort="0"
       velocity="0" />
-    <dynamics damping="0.7" friction="1.0"/>
+
+      <!-- Added Joint Dynamics to Prevent Separation -->
+      <dynamics damping="0.7" friction="1.0"/>
+
   </joint>
   <link
     name="link_1_cap">
     <inertial>
       <origin
-        xyz="1.42302771372066E-07 -0.00806677437392857 0.138671119640996"
+        xyz="1.423E-07 -0.0080668 0.63232"
         rpy="0 0 0" />
       <mass
-        value="0.330021171721498" />
+        value="0.33002" />
       <inertia
-        ixx="0.000313864807069818"
-        ixy="1.39841178897165E-09"
-        ixz="2.28303347219796E-10"
-        iyy="0.000335340499862343"
-        iyz="-7.39635181857418E-05"
-        izz="0.000541751266552296" />
+        ixx="0.00031386"
+        ixy="1.3984E-09"
+        ixz="2.283E-10"
+        iyy="0.00033534"
+        iyz="-7.3964E-05"
+        izz="0.00054175" />
     </inertial>
     <visual>
       <origin
@@ -152,7 +292,7 @@
       <material
         name="">
         <color
-          rgba="0.482352941176471 0.792156862745098 1 1" />
+          rgba="0.48235 0.79216 1 1" />
       </material>
     </visual>
     <collision>
@@ -165,28 +305,39 @@
       </geometry>
     </collision>
   </link>
-  <joint name="link_1_cap_joint" type="prismatic">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <parent link="link_1" />
-      <child link="link_1_cap" />
-      <axis xyz="1 0 0" />
-      <limit lower="0" upper="0" effort="0" velocity="0" />
+  <joint
+    name="link_1_cap_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="link_1" />
+    <child
+      link="link_1_cap" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="link_2">
     <inertial>
       <origin
-        xyz="5.28224377692258E-09 -0.212110309879065 0.129614412124911"
+        xyz="5.2822E-09 -0.21211 0.12961"
         rpy="0 0 0" />
       <mass
-        value="4.0347772255313" />
+        value="4.0348" />
       <inertia
-        ixx="0.112004707514996"
-        ixy="1.49514812132019E-08"
-        ixz="-4.44365415979749E-10"
-        iyy="0.00580966202350412"
-        iyz="1.87193857431351E-05"
-        izz="0.1121524014166" />
+        ixx="0.112"
+        ixy="1.4951E-08"
+        ixz="-4.4437E-10"
+        iyy="0.0058097"
+        iyz="1.8719E-05"
+        izz="0.11215" />
     </inertial>
     <visual>
       <origin
@@ -199,7 +350,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
@@ -216,8 +367,8 @@
     name="joint_2"
     type="revolute">
     <origin
-      xyz="0 0 0.09"
-      rpy="-1.5707963267949 0 0" />
+      xyz="0 0 0.58365"
+      rpy="-1.57079632679489 0 0" />
     <parent
       link="link_1" />
     <child
@@ -229,23 +380,25 @@
       upper="3.1416"
       effort="0"
       velocity="0" />
-    <dynamics damping="0.7" friction="1.0"/>
+
+      <!-- Added Joint Dynamics to Prevent Separation -->
+      <dynamics damping="0.7" friction="1.0"/>
   </joint>
   <link
     name="link_2_cap_1">
     <inertial>
       <origin
-        xyz="-1.42302772727024E-07 0.00806677437392862 0.183671119640996"
+        xyz="-1.423E-07 0.0080668 0.18367"
         rpy="0 0 0" />
       <mass
-        value="0.330021171721499" />
+        value="0.33002" />
       <inertia
-        ixx="0.000313864807069819"
-        ixy="1.39841178841114E-09"
-        ixz="-2.28303348779531E-10"
-        iyy="0.000335340499862345"
-        iyz="7.39635181857419E-05"
-        izz="0.000541751266552297" />
+        ixx="0.00031386"
+        ixy="1.3984E-09"
+        ixz="-2.283E-10"
+        iyy="0.00033534"
+        iyz="7.3964E-05"
+        izz="0.00054175" />
     </inertial>
     <visual>
       <origin
@@ -258,7 +411,7 @@
       <material
         name="">
         <color
-          rgba="0.482352941176471 0.792156862745098 1 1" />
+          rgba="0.48235 0.79216 1 1" />
       </material>
     </visual>
     <collision>
@@ -271,28 +424,39 @@
       </geometry>
     </collision>
   </link>
-  <joint name="link_2_cap_1_joint" type="prismatic">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <parent link="link_2" />
-      <child link="link_2_cap_1" />
-      <axis xyz="1 0 0" />
-      <limit lower="0" upper="0" effort="0" velocity="0" />
+  <joint
+    name="link_2_cap_1_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="link_2" />
+    <child
+      link="link_2_cap_1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="link_2_cap_2">
     <inertial>
       <origin
-        xyz="1.42302768078402E-07 -0.433066774373929 0.183671119640996"
+        xyz="1.423E-07 -0.43307 0.18367"
         rpy="0 0 0" />
       <mass
-        value="0.330021171721498" />
+        value="0.33002" />
       <inertia
-        ixx="0.000313864807069817"
-        ixy="1.39841178881497E-09"
-        ixz="2.28303347202352E-10"
-        iyy="0.00033534049986234"
-        iyz="-7.39635181857418E-05"
-        izz="0.000541751266552293" />
+        ixx="0.00031386"
+        ixy="1.3984E-09"
+        ixz="2.283E-10"
+        iyy="0.00033534"
+        iyz="-7.3964E-05"
+        izz="0.00054175" />
     </inertial>
     <visual>
       <origin
@@ -305,7 +469,7 @@
       <material
         name="">
         <color
-          rgba="0.482352941176471 0.792156862745098 1 1" />
+          rgba="0.48235 0.79216 1 1" />
       </material>
     </visual>
     <collision>
@@ -318,28 +482,39 @@
       </geometry>
     </collision>
   </link>
-  <joint name="link_2_cap_2_joint" type="prismatic">
-    <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="link_2" />
-    <child link="link_2_cap_2" />
-    <axis xyz="1 0 0" />
-    <limit lower="0" upper="0" effort="0" velocity="0" />
+  <joint
+    name="link_2_cap_2_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="link_2" />
+    <child
+      link="link_2_cap_2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="link_3">
     <inertial>
       <origin
-        xyz="0.170735221821587 -3.25840811083973E-08 0.0224616676097575"
+        xyz="0.17074 -3.2584E-08 0.022462"
         rpy="0 0 0" />
       <mass
-        value="2.32742946004391" />
+        value="2.3274" />
       <inertia
-        ixx="0.00230746896110105"
-        ixy="3.4207779530455E-08"
-        ixz="0.00199952758100954"
-        iyy="0.0464994251527757"
-        iyz="-6.32534417374874E-10"
-        izz="0.0462634575355965" />
+        ixx="0.0023075"
+        ixy="3.4208E-08"
+        ixz="0.0019995"
+        iyy="0.046499"
+        iyz="-6.3253E-10"
+        izz="0.046263" />
     </inertial>
     <visual>
       <origin
@@ -352,7 +527,7 @@
       <material
         name="">
         <color
-          rgba="0.788235294117647 0.819607843137255 0.933333333333333 1" />
+          rgba="0.78824 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
@@ -382,23 +557,25 @@
       upper="3.1416"
       effort="0"
       velocity="0" />
-    <dynamics damping="0.7" friction="1.0"/>
+
+      <!-- Added Joint Dynamics to Prevent Separation -->
+      <dynamics damping="0.7" friction="1.0"/>
   </joint>
   <link
     name="link_3_cap">
     <inertial>
       <origin
-        xyz="0.397027900194223 4.22453817605446E-09 -0.0224353204034724"
+        xyz="0.39703 4.2245E-09 -0.022435"
         rpy="0 0 0" />
       <mass
-        value="0.129962415869425" />
+        value="0.12996" />
       <inertia
-        ixx="6.00214466648602E-05"
-        ixy="-3.03760968261969E-11"
-        ixz="-9.23419401157055E-06"
-        iyy="5.70550178521916E-05"
-        iyz="-1.90648141611329E-11"
-        izz="9.13995513971888E-05" />
+        ixx="6.0021E-05"
+        ixy="-3.0376E-11"
+        ixz="-9.2342E-06"
+        iyy="5.7055E-05"
+        iyz="-1.9065E-11"
+        izz="9.14E-05" />
     </inertial>
     <visual>
       <origin
@@ -411,7 +588,7 @@
       <material
         name="">
         <color
-          rgba="0.482352941176471 0.792156862745098 1 1" />
+          rgba="0.48235 0.79216 1 1" />
       </material>
     </visual>
     <collision>
@@ -424,28 +601,39 @@
       </geometry>
     </collision>
   </link>
-  <joint name="link_3_cap_joint" type="prismatic">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <parent link="link_3" />
-      <child link="link_3_cap" />
-      <axis xyz="1 0 0" />
-      <limit lower="0" upper="0" effort="0" velocity="0" />
+  <joint
+    name="link_3_cap_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="link_3" />
+    <child
+      link="link_3_cap" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="link_4">
     <inertial>
       <origin
-        xyz="2.08868109703753E-08 -0.0104204825260419 0.00625096574296091"
+        xyz="0.006251 2.0887E-08 0.09948"
         rpy="0 0 0" />
       <mass
-        value="0.361403101490435" />
+        value="0.3614" />
       <inertia
-        ixx="0.000347379241813699"
-        ixy="-4.53086892636865E-10"
-        ixz="1.81738584051007E-10"
-        iyy="0.000274440792632068"
-        iyz="-3.88893030652286E-05"
-        izz="0.000346423259403175" />
+        ixx="0.00034642"
+        ixy="1.8174E-10"
+        ixz="-3.8889E-05"
+        iyy="0.00034738"
+        iyz="-4.5309E-10"
+        izz="0.00027444" />
     </inertial>
     <visual>
       <origin
@@ -458,7 +646,7 @@
       <material
         name="">
         <color
-          rgba="0.796078431372549 0.819607843137255 0.933333333333333 1" />
+          rgba="0.79608 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
@@ -475,36 +663,38 @@
     name="joint_4"
     type="revolute">
     <origin
-      xyz="0.39225 0 0.1099"
-      rpy="1.5707963267949 0 1.5707963267949" />
+      xyz="0.39225 0 0"
+      rpy="0 0 0" />
     <parent
       link="link_3" />
     <child
       link="link_4" />
     <axis
-      xyz="0 1 0" />
+      xyz="0 0 -1" />
     <limit
       lower="-3.1416"
       upper="3.1416"
       effort="0"
       velocity="0" />
-    <dynamics damping="0.7" friction="1.0"/>
+
+      <!-- Added Joint Dynamics to Prevent Separation -->
+      <dynamics damping="0.7" friction="1.0"/>
   </joint>
   <link
     name="link_4_cap">
     <inertial>
       <origin
-        xyz="-4.22452399082911E-09 0.00477790019422317 -0.0376853204034723"
+        xyz="-0.037685 -4.2245E-09 0.11468"
         rpy="0 0 0" />
       <mass
-        value="0.129962415869424" />
+        value="0.12996" />
       <inertia
-        ixx="5.70550178521915E-05"
-        ixy="3.03760968441512E-11"
-        ixz="1.90648139359578E-11"
-        iyy="6.00214466648598E-05"
-        iyz="-9.23419401157052E-06"
-        izz="9.13995513971885E-05" />
+        ixx="9.14E-05"
+        ixy="1.9065E-11"
+        ixz="-9.2342E-06"
+        iyy="5.7055E-05"
+        iyz="3.0376E-11"
+        izz="6.0021E-05" />
     </inertial>
     <visual>
       <origin
@@ -517,7 +707,7 @@
       <material
         name="">
         <color
-          rgba="0.482352941176471 0.792156862745098 1 1" />
+          rgba="0.48235 0.79216 1 1" />
       </material>
     </visual>
     <collision>
@@ -530,28 +720,39 @@
       </geometry>
     </collision>
   </link>
-  <joint name="link_4_cap_joint" type="prismatic">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <parent link="link_4" />
-      <child link="link_4_cap" />
-      <axis xyz="1 0 0" />
-      <limit lower="0" upper="0" effort="0" velocity="0" />
+  <joint
+    name="link_4_cap_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="link_4" />
+    <child
+      link="link_4_cap" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="link_5">
     <inertial>
       <origin
-        xyz="-2.08867958526121E-08 0.0104204825260416 0.00625096574296091"
+        xyz="-2.0887E-08 0.006251 0.08023"
         rpy="0 0 0" />
       <mass
-        value="0.361403101490434" />
+        value="0.3614" />
       <inertia
-        ixx="0.000347379241813699"
-        ixy="-4.53086893620097E-10"
-        ixz="-1.81738583678317E-10"
-        iyy="0.000274440792632068"
-        iyz="3.88893030652285E-05"
-        izz="0.000346423259403175" />
+        ixx="0.00034738"
+        ixy="-1.8174E-10"
+        ixz="4.5309E-10"
+        iyy="0.00034642"
+        iyz="-3.8889E-05"
+        izz="0.00027444" />
     </inertial>
     <visual>
       <origin
@@ -564,7 +765,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
@@ -581,36 +782,38 @@
     name="joint_5"
     type="revolute">
     <origin
-      xyz="0 0 0.0946499999999998"
-      rpy="-1.5707963267949 0 0" />
+      xyz="0 0 0.1099"
+      rpy="1.5707963267949 0 1.5707963267949" />
     <parent
       link="link_4" />
     <child
       link="link_5" />
     <axis
-      xyz="0 -1 0" />
+      xyz="0 0 -1" />
     <limit
       lower="-3.1416"
       upper="3.1416"
       effort="0"
       velocity="0" />
-    <dynamics damping="0.7" friction="1.0"/>
+
+      <!-- Added Joint Dynamics to Prevent Separation -->
+      <dynamics damping="0.7" friction="1.0"/>
   </joint>
   <link
     name="link_5_cap">
     <inertial>
       <origin
-        xyz="4.22454006210197E-09 -0.00477790019422364 -0.0376853204034798"
+        xyz="4.2245E-09 -0.037685 0.095428"
         rpy="0 0 0" />
       <mass
-        value="0.129962415869425" />
+        value="0.12996" />
       <inertia
-        ixx="5.70550178521917E-05"
-        ixy="3.03760968117855E-11"
-        ixz="-1.90648140818228E-11"
-        iyy="6.00214466648601E-05"
-        iyz="9.2341940115703E-06"
-        izz="9.13995513971891E-05" />
+        ixx="5.7055E-05"
+        ixy="-1.9065E-11"
+        ixz="-3.0376E-11"
+        iyy="9.14E-05"
+        iyz="-9.2342E-06"
+        izz="6.0021E-05" />
     </inertial>
     <visual>
       <origin
@@ -623,7 +826,7 @@
       <material
         name="">
         <color
-          rgba="0.482352941176471 0.792156862745098 1 1" />
+          rgba="0.48235 0.79216 1 1" />
       </material>
     </visual>
     <collision>
@@ -636,28 +839,39 @@
       </geometry>
     </collision>
   </link>
-  <joint name="link_5_cap_joint" type="prismatic">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <parent link="link_5" />
-      <child link="link_5_cap" />
-      <axis xyz="1 0 0" />
-      <limit lower="0" upper="0" effort="0" velocity="0" />
+  <joint
+    name="link_5_cap_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="link_5" />
+    <child
+      link="link_5_cap" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="link_6">
     <inertial>
       <origin
-        xyz="6.47588935142619E-13 -3.74367203903603E-13 -0.0211694949353718"
+        xyz="-7.1229E-16 2.2204E-16 0.056331"
         rpy="0 0 0" />
       <mass
-        value="0.148286360656985" />
+        value="0.14829" />
       <inertia
-        ixx="7.71175301770416E-05"
-        ixy="6.59118773723624E-22"
-        ixz="-7.79562353002313E-20"
-        iyy="7.71175301770417E-05"
-        iyz="7.0513121553266E-22"
-        izz="9.81906446643079E-05" />
+        ixx="7.7118E-05"
+        ixy="-1.9478E-22"
+        ixz="4.0506E-22"
+        iyy="7.7118E-05"
+        iyz="-3.0608E-20"
+        izz="9.8191E-05" />
     </inertial>
     <visual>
       <origin
@@ -670,7 +884,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
@@ -687,8 +901,8 @@
     name="joint_6"
     type="revolute">
     <origin
-      xyz="0 0 0.081499999999992"
-      rpy="0 0 0" />
+      xyz="0 0 0.0906500000000001"
+      rpy="-1.5707963267949 0 0" />
     <parent
       link="link_5" />
     <child
@@ -700,9 +914,74 @@
       upper="3.1416"
       effort="0"
       velocity="0" />
-    <dynamics damping="0.7" friction="1.0"/>
+
+      <!-- Added Joint Dynamics to Prevent Separation -->
+      <dynamics damping="0.7" friction="1.0"/>
   </joint>
+  <link
+    name="tooling_link">
+    <inertial>
+      <origin
+        xyz="-1.5989E-18 2.2204E-16 -0.082843"
+        rpy="0 0 0" />
+      <mass
+        value="0.12635" />
+      <inertia
+        ixx="0.0001347"
+        ixy="8.3207E-21"
+        ixz="1.1338E-20"
+        iyy="0.0001347"
+        iyz="-8.3871E-20"
+        izz="3.2352E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_two/meshes/tooling_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.19608 0.19608 0.19608 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://project_two/meshes/tooling_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="tooling_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0.2002"
+      rpy="0 0 0" />
+    <parent
+      link="link_6" />
+    <child
+      link="tooling_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+
+  <!-- Gazebo Color Plugins -->
   <gazebo reference="base_link">
+    <xacro:base_color />
+  </gazebo>
+  <gazebo reference="link_0">
     <xacro:body_color />
   </gazebo>
   <gazebo reference="link_1">
@@ -741,6 +1020,14 @@
   <gazebo reference="link_5_cap">
     <xacro:cap_color />
   </gazebo>
+  <gazebo reference="camera_link">
+    <xacro:tool_color />
+  </gazebo>
+  <gazebo reference="tooling_link">
+    <xacro:tool_color />
+  </gazebo>
+
+  <!-- Gazebo Controller Plugin -->
   <ros2_control name="GazeboSystem" type="system">
     <hardware>
       <plugin>gazebo_ros2_control/GazeboSystem</plugin>
@@ -788,11 +1075,15 @@
         <state_interface name="position"/>
     </joint>
   </ros2_control>
+
+  <!-- Control Configuration File -->
   <gazebo>
     <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
       <parameters>$(find project_two)/config/control.yaml</parameters>
     </plugin>
   </gazebo>
+
+  <!-- Joint Dynamics Plugins to Prevent Joint Separation -->
   <gazebo reference="joint_1">
     <implicitSpringDamper>true</implicitSpringDamper>
   </gazebo>

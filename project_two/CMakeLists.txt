@@ -20,6 +20,7 @@ install(DIRECTORY
   worlds
   config
   images
+  rviz
   DESTINATION share/${PROJECT_NAME}/
 )
 
@@ -34,7 +35,6 @@ install(
   scripts/joint_angle_publisher.py
   scripts/image_processing.py
   scripts/inverse_kinematics.py
-  scripts/orientation_test.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
