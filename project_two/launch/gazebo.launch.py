@@ -4,8 +4,7 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription,ExecuteProcess,RegisterEventHandler
-from launch.event_handlers import OnProcessExit
+from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 
@@ -18,7 +17,7 @@ def generate_launch_description():
     world = os.path.join(
         get_package_share_directory('project_two'),
         'worlds',
-        'empty_world.world'
+        'project_two_world.world'
     )
 
     # Launch Description to run Gazebo Server

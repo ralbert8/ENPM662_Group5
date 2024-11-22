@@ -154,7 +154,7 @@ def generate_launch_description():
             spawn_robot,
             joint_state_broadcaster_spawner,
             delay_robot_postion_controller_spawner_after_joint_state_broadcaster_spawner,
-            delay_robot_velocity_controller_spawner_after_joint_state_broadcaster_spawner,
+            # delay_robot_velocity_controller_spawner_after_joint_state_broadcaster_spawner,
             tf
         ]
     )
