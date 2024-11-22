@@ -18,7 +18,6 @@ def generate_launch_description():
 
     ####### DATA INPUT ##########
     xacro_file = "robot_arm.urdf.xacro"
-
     package_description = "project_two"
 
     # Position and orientation
@@ -34,7 +33,6 @@ def generate_launch_description():
     robot_desc_path = os.path.join(get_package_share_directory(
         package_description), "urdf", xacro_file)
 
-
     # Robot Description in XACRO Format
     robot_desc = xacro.process_file(robot_desc_path)
 
@@ -43,8 +41,6 @@ def generate_launch_description():
     
     # Entity Name
     entity_name = robot_base_name+"-"+str(random.random())
-
-   
 
     # Spawn ROBOT Set Gazebo (Does not spwan robot only communicates with the Gazebo Client)
     spawn_robot = Node(
@@ -85,7 +81,6 @@ def generate_launch_description():
     )
 
     # Joint State Publisher Node
-
     joint_state_publisher_node = launch_ros.actions.Node(
         package='joint_state_publisher',
         executable='joint_state_publisher',
@@ -93,20 +88,11 @@ def generate_launch_description():
         condition=launch.conditions.UnlessCondition(LaunchConfiguration('gui'))
     )
 
-
     # Joint State Broadcaster Node
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
-    )
-
-
-    # Joint Velocity Controller Node
-    robot_velocity_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["velocity_controller", "--controller-manager", "/controller_manager"],
     )
 
     # Joint Position Controller Node
@@ -121,14 +107,6 @@ def generate_launch_description():
         event_handler=OnProcessExit(
             target_action=joint_state_broadcaster_spawner,
             on_exit=[robot_position_controller_spawner],
-        )
-    )
-
-    # Delay start of robot_controller after `joint_state_broadcaster`
-    delay_robot_velocity_controller_spawner_after_joint_state_broadcaster_spawner = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=joint_state_broadcaster_spawner,
-            on_exit=[robot_velocity_controller_spawner],
         )
     )
 
