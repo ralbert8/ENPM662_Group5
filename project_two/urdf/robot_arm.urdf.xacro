@@ -1,7 +1,4 @@
 <?xml version="1.0" ?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="robot_arm" xmlns:xacro="http://ros.org/wiki/xacro">
   
@@ -1074,6 +1071,46 @@
         </command_interface>
         <state_interface name="position"/>
     </joint>
+
+    <!-- Dummy Controller for Link Cap joints to instantiate in Rviz -->
+    <joint name="link_1_cap_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="link_2_cap_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="link_3_cap_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>        
+    <joint name="link_4_cap_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="link_5_cap_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="link_6_cap_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint> 
+    <joint name="tooling_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>                
+    <joint name="link_2_cap_2_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>  
+    <joint name="link_2_cap_1_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>          
+    
+
   </ros2_control>
 
   <!-- Control Configuration File -->
