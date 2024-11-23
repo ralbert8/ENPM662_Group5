@@ -152,13 +152,12 @@
   </link>
 
   <!-- Dummy link to correct Image Reference Frame for Camera -->
+  <link name="camera_link_optical" />
   <joint name="camera_optical_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 -1.5707 -1.5707963267949" />
       <parent link="camera_link" />
       <child link="camera_link_optical" />
   </joint>
-  <link name="camera_link_optical"></link>
-
   
   <link
     name="link_0">
@@ -1148,7 +1147,7 @@
   <!-- Camera Sensor -->
   
   <gazebo reference="camera_link_optical">
-    <sensor name="camera_sensor" type="camera">
+    <sensor name="camera" type="camera">
       <pose> 0 0 0 0 0 0</pose>
       <visualize>true</visualize>
       <update_rate>10</update_rate>

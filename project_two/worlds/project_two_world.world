@@ -165,10 +165,10 @@
       <wall_time>1732225730 381969563</wall_time>
       <iterations>49654</iterations>
       <model name='Stop Sign'>
-        <pose>0.0 -10.0 0.0 0.0 0.0 3.1416</pose>
+        <pose>0.0 -5.0 0.0 0.0 0.0 3.1416</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>0.0 -10.0 0.0 0.0 0.0 3.1416</pose>
+          <pose>0.0 -5.0 0.0 0.0 0.0 3.1416</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -185,10 +185,10 @@
         </link>
       </model>
       <model name='person_standing'>
-        <pose>-1.0 -10.0 0.0 0.0 0.0 3.1416</pose>
+        <pose>-1.0 -5.0 0.0 0.0 0.0 3.1416</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>-1.0 -10.0 0.0 0.0 0.0 3.1416</pose>
+          <pose>-1.0 -5.0 0.0 0.0 0.0 3.1416</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>1.64677 1.15944 -1.37587 1.94392 1.45706 3.08499</acceleration>
           <wrench>131.742 92.7553 -110.069 0 -0 0</wrench>
@@ -198,7 +198,7 @@
         <pose>0 0 10 0 -0 0</pose>
       </light>
       <light name='user_point_light_0'>
-        <pose>0.0 -15.0 1.5 0.0 0.0 0.0</pose>
+        <pose>0.0 -10.0 1.5 0.0 0.0 0.0</pose>
       </light>
     </state>
     <light name='user_point_light_0' type='point'>
@@ -206,7 +206,7 @@
       <diffuse>1.0 1.0 1.0 1</diffuse>
       <specular>0.1 0.1 0.1 1</specular>
       <attenuation>
-        <range>20</range>
+        <range>50</range>
         <constant>0.5</constant>
         <linear>0.01</linear>
         <quadratic>0.001</quadratic>
