@@ -301,7 +301,7 @@ with open(output_file, mode="w", newline="") as file:
 # Plot Path in 3D Space
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-ax.plot(x_plot, y_plot, z_plot, label="End Effector Path")
+ax.plot(x_plot, y_plot, z_plot, label="3D Commanded End Effector Path")
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
@@ -310,4 +310,10 @@ ax.set_xlim([-1, 1])
 ax.set_ylim([-1, 1])
 ax.set_zlim([-1, 1])
 ax.legend()
-plt.show()
+plt.title("3D Commanded End Effector Path")
+# plt.show()
+
+plotname = "3D_Commanded_EndEffector_Path.png"
+plt.savefig(plotname)
+plotpath = os.path.join(os.getcwd(),plotname)
+print(f"\nFinished generating end effector planned trajectory to sketch the scene! See trajectory plot: {plotpath}")

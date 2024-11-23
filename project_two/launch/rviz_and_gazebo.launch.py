@@ -16,10 +16,16 @@ def generate_launch_description():
 
     # Get Gazebo ROS interface package
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
+    pkg_proj_two   = get_package_share_directory('project_two')
 
+    # Remove old joint trajectory file (fail-safe)
+    old_joint_cmds = os.path.join(pkg_proj_two, 'csv', 'joint_angles.csv')
+    if os.path.exists(old_joint_cmds) and os.path.isfile(old_joint_cmds):
+        os.remove(old_joint_cmds)
+                
     # Get the location for empty world
     world = os.path.join(
-        get_package_share_directory('project_two'),
+        pkg_proj_two,
         'worlds',
         'project_two_world.world'
     )
@@ -39,10 +45,10 @@ def generate_launch_description():
         )
     )
 
+    # CMA: Tried removing this redundancy and calling pkg_proj_two in spawn_robot_world
+    # but would get "spawn failed" in launch log
     # Get the package directory 
-    pkg_gazebo = get_package_share_directory('project_two')
-
-   
+    pkg_gazebo = get_package_share_directory('project_two')   
 
     # Launch Decription to Spawn Robot Model 
     spawn_robot_world = IncludeLaunchDescription(
@@ -64,7 +70,6 @@ def generate_launch_description():
         name='rviz_node',
         parameters=[{'use_sim_time': True}],
         arguments=['-d', rviz_config_dir])
-
     
 
     # Launch Description 
@@ -72,6 +77,5 @@ def generate_launch_description():
         gzserver_cmd,
         gzclient_cmd,
         spawn_robot_world,
-        rviz_node
-        
+        rviz_node        
     ])

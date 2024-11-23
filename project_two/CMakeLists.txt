@@ -12,6 +12,10 @@ find_package(xacro REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(ros2_control REQUIRED)
+find_package(rclpy REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(cv_bridge REQUIRED)
+
 
 install(DIRECTORY
   urdf
@@ -35,6 +39,7 @@ install(
   scripts/joint_angle_publisher.py
   scripts/image_processing.py
   scripts/inverse_kinematics.py
+  scripts/node_img_subscriber.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

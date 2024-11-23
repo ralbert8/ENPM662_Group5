@@ -6,19 +6,25 @@ from ament_index_python.packages import get_package_share_directory
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64MultiArray
+import time 
 
 package_share_dir = get_package_share_directory('project_two')
 
 class JointAnglePublisher(Node):
     def __init__(self):
-        super().__init__('joint_angle_publisher')
-
-        # Locate CSV
+        super().__init__('joint_angle_publisher')        
+            
+        # Locate Package Share directory
         try:
             csv_path = input_file = os.path.join(package_share_dir, 'csv', 'joint_angles.csv')
         except KeyError:
             raise FileNotFoundError("The 'project_two' package could not be found.")
-
+        
+        # Wait for csv to appear in directory
+        while not os.path.isfile(input_file):
+            time.sleep(1)
+            print("waiting for joint_angles.csv to appear in directory...")
+            
         # Read CSV
         self.joint_angles = []
         try:

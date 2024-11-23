@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/carissa/Desktop/proj2/install/project_two/include/**",
+        "/home/carissa/Desktop/enpm662_ws/install/project_two/include/**",
+        "/home/carissa/Desktop/enpm662_ws/install/project_one/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/carissa/Desktop/proj2/src/project_two/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
