@@ -94,6 +94,22 @@
     <child link="base_link" />
   </joint>
 
+    
+  
+  <joint
+    name="camera_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.120050000000001 0.2983"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  
   <link
     name="camera_link">
     <inertial>
@@ -134,19 +150,16 @@
       </geometry>
     </collision>
   </link>
-  <joint
-    name="camera_joint"
-    type="fixed">
-    <origin
-      xyz="0 -0.120050000000001 0.2983"
-      rpy="1.5707963267949 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="camera_link" />
-    <axis
-      xyz="0 0 0" />
+
+  <!-- Dummy link to correct Image Reference Frame for Camera -->
+  <joint name="camera_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 -1.5707 -1.5707963267949" />
+      <parent link="camera_link" />
+      <child link="camera_link_optical" />
   </joint>
+  <link name="camera_link_optical"></link>
+
+  
   <link
     name="link_0">
     <inertial>
@@ -1077,10 +1090,6 @@
         <command_interface name="position"/>
         <state_interface name="position"/>
     </joint>
-    <joint name="link_2_cap_joint">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-    </joint>
     <joint name="link_3_cap_joint">
         <command_interface name="position"/>
         <state_interface name="position"/>
@@ -1093,10 +1102,6 @@
         <command_interface name="position"/>
         <state_interface name="position"/>
     </joint>
-    <joint name="link_6_cap_joint">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-    </joint> 
     <joint name="tooling_joint">
         <command_interface name="position"/>
         <state_interface name="position"/>
@@ -1108,7 +1113,7 @@
     <joint name="link_2_cap_1_joint">
         <command_interface name="position"/>
         <state_interface name="position"/>
-    </joint>          
+    </joint>              
     
 
   </ros2_control>
@@ -1139,4 +1144,36 @@
   <gazebo reference="joint_6">
     <implicitSpringDamper>true</implicitSpringDamper>
   </gazebo>
+
+  <!-- Camera Sensor -->
+  
+  <gazebo reference="camera_link_optical">
+    <sensor name="camera_sensor" type="camera">
+      <pose> 0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <camera>
+        <horizontal_fov>1.089</horizontal_fov>
+        <image>
+            <format>R8G8B8</format>
+            <width>640</width>
+            <height>480</height>
+        </image>
+        <clip>
+            <near>0.05</near>
+            <far>20</far>
+        </clip>
+      </camera>
+
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <always_on>true</always_on>
+        <cameraName>camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName> 
+        <frame_name>camera_link_optical</frame_name>        
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
 </robot>
