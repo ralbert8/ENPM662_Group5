@@ -37,16 +37,18 @@ ros2 run project_one proportional_controller.py
 observe the movement of the car, when you ctrl + c in the terminal the plots will appear.
 
 # Project 2 ENPM662-Group 5 Riley Albert, Alex Hall and Carissa Arillo
-## Part 1 Image Processing
+## Part 1 Rviz and Gazebo initialization
 ### To run part 1, do the following:
 1. In a terminal window in the root workspace, build the workspace using: colcon build, source install/setup.bash
-2. Run the image processing node using: ros2 run project_two image_proccessing.py. This will output a .csv to <root workspace>/install/project_two/share/project_two/csv/contours.csv
-## Part 2 Inverse Kinematics
+2. Launch the Rviz and Gazebo software: ros2 launch project_two rviz_and_gazebo.launch.py. 
+This will open Gazebo and Rviz. In Gazebo, the robot spawns with a camera sensor. The camera sensor field of view faces a scene of objects.
+In Rviz, the camera feed can be seen in the bottom left corner.
+
+## Part 2 Publisher and Subscriber
 ### To run part 2, do the following:
-1. Run the inverse kinematics node using: ros2 run project_two inverse_kinematics.py. This will plot the end effector path, output the pose to the terminal, and output a .csv to <root workspace>/install/project_two/share/project_two/csv/joint_angles.csv ** NOTE: Avoid running this node with Gazebo open. It severely slows down the process.
-## Part 3 Gazebo Environment
-### To launch Gazebo, do the following:
-1. Launch Gazebo using: ros2 launch project_two gazebo.launch.py
-## Part 4 Joint Angle Publisher
-### To run part 4, do the following
-1. Run joint angle publisher node using: ros2 run project_two joint_angle_publisher.py. This will move the robot arm according to the joint angles in the .csv generated in part 2.
+1. Launch the camera subscriber and joint angle publisher: ros2 launch project_two pub_and_sub.launch.py. 
+The subscriber performs the following:
+ - Subscribes to the camera raw_image topic, processes it to extract the scene contours, and outputs to <root workspace>/install/project_two/share/project_two/csv/contours.csv.
+ - Then the inverse kinematics will be determined to plan the robot arm trajectory path to sketch the contours, print the pose to the terminal, and output to <root workspace>/install/project_two/share/project_two/csv/joint_angles.csv.
+The publisher performs the following: 
+ - Waits for the joint_angles.csv to generate and begins commanding the robot arm joints according to the planned trajectory. 
