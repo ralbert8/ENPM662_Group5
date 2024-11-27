@@ -40,6 +40,7 @@ install(
   scripts/image_processing.py
   scripts/inverse_kinematics.py
   scripts/node_img_subscriber.py
+  scripts/path_publisher.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
