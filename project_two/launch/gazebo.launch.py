@@ -47,14 +47,12 @@ def generate_launch_description():
                          'spawn_robot_ros2.launch.py'),
         )
     )
-
-
-    
+   
 
     # Launch Description 
     return LaunchDescription([
         gzserver_cmd,
         gzclient_cmd,
-        spawn_robot_world
-        
+        spawn_robot_world,
+
     ])

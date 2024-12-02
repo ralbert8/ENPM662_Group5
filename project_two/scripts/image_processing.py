@@ -64,7 +64,7 @@ def extract_and_scale_contours_yz(package_name, relative_csv_path, relative_imag
     for contour in contours:
         for point in contour:
             y, z = point[0]
-            y_normalized = (y - y_min) * scale
+            y_normalized = (y - y_min) * scale - 0.15
             z_normalized = (z - z_min) * scale + 1.0
             scaled_contours.append((x_value, y_normalized, z_normalized))
 
