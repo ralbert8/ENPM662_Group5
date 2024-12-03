@@ -17,11 +17,6 @@ def generate_launch_description():
     # Get Gazebo ROS interface package
     pkg_proj_two   = get_package_share_directory('project_two')
 
-    # Remove old joint trajectory file (fail-safe)
-    old_joint_cmds = os.path.join(pkg_proj_two, 'csv', 'joint_angles.csv')
-    if os.path.exists(old_joint_cmds) and os.path.isfile(old_joint_cmds):
-        os.remove(old_joint_cmds)
-
     subscriber_node = Node(
         package='project_two',  
         executable='node_img_subscriber.py',  # writes camera img to file and processes it to contours.csv
@@ -29,8 +24,40 @@ def generate_launch_description():
         name='image_subscriber_node',
         parameters=[{'use_sim_time': True}],
     )
+
+    ik_node = Node(
+        package='project_two',  
+        executable='inverse_kinematics.py',
+        output='screen',
+        name='inverse_kinematics_node',
+        parameters=[{'use_sim_time': True}],
+    )
+
+    # Delay start of ik after img process
+    delay_ik_node = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=subscriber_node,
+            on_exit=[ik_node],
+        )
+    )
+
+    path_publisher_node = Node(
+        package='project_two',  
+        executable='path_publisher.py',  
+        output='screen',
+        name='path_publisher',
+        parameters=[{'use_sim_time': True}],
+    )
+
+    # Delay start of path publisher after ik
+    delay_path_publisher = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=ik_node,
+            on_exit=[path_publisher_node],
+        )
+    )
     
-    publisher_node = Node(
+    joint_publisher_node = Node(
         package='project_two',  
         executable='joint_angle_publisher.py',  # commands end effector
         output='screen',
@@ -38,18 +65,22 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}],
     )
 
-    publisher_node_1 = Node(
-        package='project_two',  
-        executable='path_publisher.py',  
-        output='screen',
-        name='path_publisher',
-        parameters=[{'use_sim_time': True}],
+    # Delay start of joint publisher after ik
+    delay_joint_publisher = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_publisher_node,
+            on_exit=[ik_node],
+        )
     )
     
     # Launch Description 
     return LaunchDescription([
         subscriber_node,
-        publisher_node,
-        publisher_node_1
+        delay_ik_node,
+        ik_node,
+        delay_path_publisher,
+        path_publisher_node,
+        delay_joint_publisher,
+        joint_publisher_node,
         
     ])

@@ -56,7 +56,7 @@
           <material>
             <script>
               <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Grey</name>
+              <name>Gazebo/White</name>
             </script>
           </material>
         </visual>
@@ -229,15 +229,13 @@
         <falloff>0</falloff>
       </spot>
     </light>
-    <model name='canvas'>
-      <static>1</static>
-      <pose>0.525 0 1.15 1.5708 -0 1.5708</pose>
-      <link name='link'>
-        <visual name='canvas_visual'>
+    <model name="canvas">
+      <static>true</static>
+      <pose>0.525 0 1.15 1.5708 0 1.5708</pose>
+      <link name="link">
+        <visual name="canvas_visual">
           <geometry>
-            <box>
-              <size>1 1 1</size>
-            </box>
+            <box size="0.4 0.4 0.05"/>
           </geometry>
           <material>
             <script>
@@ -246,40 +244,20 @@
             </script>
           </material>
         </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
       </link>
     </model>
-    <model name='easel'>
-      <static>1</static>
-      <pose>0.575 0 0.575 3.14159 1.57079 3.14159</pose>
-      <link name='link'>
-        <collision name='easel_collision'>
+    <model name="easel">
+      <static>true</static>
+      <pose>0.575 0 0.575 0 1.5708 0</pose>
+      <link name="link">
+        <collision name="easel_collision">
           <geometry>
-            <box>
-              <size>1 1 1</size>
-            </box>
+            <box size="1.15 0.05 0.05"/>
           </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
         </collision>
-        <visual name='easel_visual'>
+        <visual name="easel_visual">
           <geometry>
-            <box>
-              <size>1 1 1</size>
-            </box>
+            <box size="1.15 0.05 0.05"/>
           </geometry>
           <material>
             <script>
@@ -288,9 +266,6 @@
             </script>
           </material>
         </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
       </link>
     </model>
     <gui fullscreen='0'>

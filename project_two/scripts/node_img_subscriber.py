@@ -9,6 +9,7 @@ import numpy as np
 from datetime import datetime
 from ament_index_python.packages import get_package_share_directory, get_package_prefix
 import subprocess
+from rclpy.qos import QoSProfile, ReliabilityPolicy
 
 def img_processing(img_file, plot_width_m=0.3, plot_height_m=0.3, x_value=0.5):
 
@@ -78,7 +79,7 @@ def img_processing(img_file, plot_width_m=0.3, plot_height_m=0.3, x_value=0.5):
         for point in contour:
             y, z = point[0]
             y_normalized = (y - y_min) * scale
-            z_normalized = (z - z_min) * scale + 1.0
+            z_normalized = -(z - z_min) * scale + 1.3
             yplan.append(y_normalized)
             zplan.append(z_normalized)
             scaled_contours.append((x_value, y_normalized, z_normalized))
@@ -124,18 +125,22 @@ class ImgSubscriber(Node):
         package_share_dir = get_package_share_directory('project_two')
         self.img_dir = os.path.join(package_share_dir, "camera_images")
         os.makedirs(self.img_dir,exist_ok=True)
-        
-        # Remove old joint trajectory file (fail-safe)
-        old_joint_cmds = os.path.join(package_share_dir, 'csv', 'joint_angles.csv')
-        if os.path.exists(old_joint_cmds) and os.path.isfile(old_joint_cmds):
-            os.remove(old_joint_cmds)
+    
             
         self.last_image = None
         self.got_image = False
         self.bridge = CvBridge()
 
+        qos_profile = QoSProfile(depth=10)
+        qos_profile.reliability = ReliabilityPolicy.BEST_EFFORT
+
         # Create Subscriber to '/camera/image_raw' topic
-        self.subscriber = self.create_subscription(Image,'/camera/image_raw',self.image_callback,10)
+        self.subscriber = self.create_subscription(
+            Image,
+            '/camera/image_raw',
+            self.image_callback,
+            qos_profile
+        )
         
     def image_callback(self, msg):        
         """

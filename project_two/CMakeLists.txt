@@ -25,6 +25,7 @@ install(DIRECTORY
   config
   images
   rviz
+  scripts
   DESTINATION share/${PROJECT_NAME}/
 )
 

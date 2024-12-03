@@ -17,11 +17,6 @@ def generate_launch_description():
     # Get Gazebo ROS interface package
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
     pkg_proj_two   = get_package_share_directory('project_two')
-
-    # Remove old joint trajectory file (fail-safe)
-    old_joint_cmds = os.path.join(pkg_proj_two, 'csv', 'joint_angles.csv')
-    if os.path.exists(old_joint_cmds) and os.path.isfile(old_joint_cmds):
-        os.remove(old_joint_cmds)
                 
     # Get the location for empty world
     world = os.path.join(
