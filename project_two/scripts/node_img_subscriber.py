@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import matplotlib.pyplot as plt
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
@@ -19,11 +19,9 @@ def img_processing(img_file, plot_width_m=0.3, plot_height_m=0.3, x_value=0.5):
         # Error Handling
         print("Error: Could not find ROS 2 package 'project_two'.")
         return False
-
     
     # Construct Full Paths for Image and CSV
     image_path = os.path.join(package_path, img_file)
-    # image_path = img_file
     output_csv_path = os.path.join(package_path, "csv/contours.csv")
     os.makedirs(os.path.dirname(output_csv_path), exist_ok=True)
             
@@ -32,11 +30,31 @@ def img_processing(img_file, plot_width_m=0.3, plot_height_m=0.3, x_value=0.5):
     if image is None:
         print(f"Error: Could not load the image at {image_path}.")
         return False
+    # image = cv2.rotate(image, cv2.ROTATE_180)
 
-    # Process Image
-    _, binary_image = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY_INV)
-    contours, _     = cv2.findContours(binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # GaussianBlur to reduce noise 
+    blurred_img = cv2.GaussianBlur(image, (7, 7), 0)
 
+    # Canny edge detection
+    edges = cv2.Canny(blurred_img, 50, 150) #edge thresholding
+
+    # Find contours based on the edges detected by Canny
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Check if any contours were found
+    if len(contours) == 0:
+        print("No contours found!")
+    else:
+        # New Empty image to draw contours 
+        contour_image = np.ones_like(image) * 255 
+
+        # Draw contours on the empty image 
+        for contour in contours:
+            cv2.drawContours(contour_image, [contour], -1, (0, 0, 0), 2) 
+    
+    # Save contour image 
+    # cv2.imwrite("contour_image.png",contour_image)
+    
     # Combine Contours into Array for Bounding Box
     all_points = np.vstack([contour[:, 0, :] for contour in contours])
 
@@ -53,12 +71,24 @@ def img_processing(img_file, plot_width_m=0.3, plot_height_m=0.3, x_value=0.5):
 
     # Normalize and Scale Contours
     scaled_contours = []
+    yplan = []
+    zplan = []
     for contour in contours:
+        
         for point in contour:
             y, z = point[0]
             y_normalized = (y - y_min) * scale
             z_normalized = (z - z_min) * scale + 1.0
+            yplan.append(y_normalized)
+            zplan.append(z_normalized)
             scaled_contours.append((x_value, y_normalized, z_normalized))
+    
+    # Save plot of planned contour trajectory for artifacts
+    plt.plot(yplan, zplan)
+    plt.title("Planned Contour Trajectory")
+    plt.xlabel("Y-axis")
+    plt.ylabel("Z-axis")
+    plt.savefig('planned_contour_traj.png')
 
     # Write Contours to CSV
     with open(output_csv_path, mode='w', newline='') as file:
@@ -66,7 +96,6 @@ def img_processing(img_file, plot_width_m=0.3, plot_height_m=0.3, x_value=0.5):
         writer.writerow(["X", "Y_mm", "Z_mm"])  # Header
         writer.writerows(scaled_contours)
 
-    # print(f"Scaled contour points saved to {output_csv_path}")
     return True
 
 def call_inv_kin():
@@ -76,9 +105,8 @@ def call_inv_kin():
     lib_dir = os.path.join(package_prefix, 'lib', package_name)
     
     script_path = os.path.join(lib_dir, 'inverse_kinematics.py')
-    # print("script path: ",script_path)    
     
-    # Running the script using subprocess.run() (blocking call)
+    # Running the script using subprocess.run
     result = subprocess.run(['python3', script_path], capture_output=True, text=True)
 
     # Output of the script
