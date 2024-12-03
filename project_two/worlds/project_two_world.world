@@ -160,10 +160,30 @@
       <pose>0.963491 1.75202 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>214 6000000</sim_time>
-      <real_time>165 326817174</real_time>
-      <wall_time>1733191602 286837297</wall_time>
-      <iterations>164352</iterations>
+      <sim_time>92 886000000</sim_time>
+      <real_time>44 26093938</real_time>
+      <wall_time>1733192487 827282079</wall_time>
+      <iterations>43232</iterations>
+      <model name='canvas'>
+        <pose>0.525 0 1.15 1.5708 -0 1.5708</pose>
+        <scale>0.4 0.4 0.05</scale>
+        <link name='link'>
+          <pose>0.525 0 1.15 1.5708 -0 1.5708</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='easel'>
+        <pose>0.575 0 0.575 3.14159 1.57079 3.14159</pose>
+        <scale>1.15 0.05 0.05</scale>
+        <link name='link'>
+          <pose>0.575 0 0.575 3.14159 1.57079 3.14159</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -175,13 +195,13 @@
         </link>
       </model>
       <model name='person_standing'>
-        <pose>-6.1e-05 -5 -0 -1e-06 -1e-06 3.14099</pose>
+        <pose>-5.5e-05 -5 -1e-06 -1e-06 1e-06 3.14104</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>-6.1e-05 -5 -0 -1e-06 -1e-06 3.14099</pose>
+          <pose>-5.5e-05 -5 -1e-06 -1e-06 1e-06 3.14104</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>1.55212 1.09042 -1.81368 1.98242 1.51572 3.09843</acceleration>
-          <wrench>124.17 87.2334 -145.095 0 -0 0</wrench>
+          <acceleration>-1.61892 -1.1378 -1.47449 -1.93607 -1.4495 3.09405</acceleration>
+          <wrench>-129.513 -91.0243 -117.959 0 -0 0</wrench>
         </link>
       </model>
       <light name='sun'>
@@ -209,9 +229,73 @@
         <falloff>0</falloff>
       </spot>
     </light>
+    <model name='canvas'>
+      <static>1</static>
+      <pose>0.525 0 1.15 1.5708 -0 1.5708</pose>
+      <link name='link'>
+        <visual name='canvas_visual'>
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='easel'>
+      <static>1</static>
+      <pose>0.575 0 0.575 3.14159 1.57079 3.14159</pose>
+      <link name='link'>
+        <collision name='easel_collision'>
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='easel_visual'>
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Gray</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-1.62752 7.01454 6.23457 0 0.554766 -1.5998</pose>
+        <pose>-0.443025 7.071 4.24873 0 0.378765 -1.89103</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
