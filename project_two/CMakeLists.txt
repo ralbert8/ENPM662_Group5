@@ -38,6 +38,7 @@ install(
   launch/robot_description_publisher.py
   scripts/joint_angle_publisher.py
   scripts/image_processing.py
+  scripts/path_publisher.py
   scripts/inverse_kinematics.py
   scripts/node_img_subscriber.py
   DESTINATION lib/${PROJECT_NAME}
