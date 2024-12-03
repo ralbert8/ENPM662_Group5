@@ -37,11 +37,19 @@ def generate_launch_description():
         name='joint_angle_publisher',
         parameters=[{'use_sim_time': True}],
     )
-    
+
+    publisher_node_1 = Node(
+        package='project_two',  
+        executable='path_publisher.py',  
+        output='screen',
+        name='path_publisher',
+        parameters=[{'use_sim_time': True}],
+    )
     
     # Launch Description 
     return LaunchDescription([
         subscriber_node,
-        publisher_node
+        publisher_node,
+        publisher_node_1
         
     ])
