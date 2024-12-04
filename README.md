@@ -12,20 +12,20 @@ In Rviz, the camera feed can be seen in the bottom left corner.
 ## Publisher and Subscriber
 ### Utilize the Following Instructions to Process the Image, Run Inverse Kinematics, and Control the Robot to Sketch the Image
 1. Node 1 - Camera Image Subscriber. 
-    - a. Open a new terminal window.
-    - b. source install/setup.bash
-    - c. ros2 run project_two node_img_subscriber.py
-    - d. Inverse Kinematics will be printed to the terminal window. Wait for the completion message: "Finished running inverse kinematics on planned end effector trajectory!"
+    - Open a new terminal window.
+    - source install/setup.bash
+    - ros2 run project_two node_img_subscriber.py
+    - Inverse Kinematics will be printed to the terminal window. Wait for the completion message: "Finished running inverse kinematics on planned end effector trajectory!"
 2. Node 2 - End Effector (Actual) Path Publisher.  
-    - a. Open a new terminal window.
-    - b. source install/setup.bash 
-    - c. ros2 run project_two path_publisher.py
-    - d. The terminal will show a message indicating it is listening for the actual joint angles: "FKSubscriber node initialized and listening for joint angles."
+    - Open a new terminal window.
+    - source install/setup.bash 
+    - ros2 run project_two path_publisher.py
+    - The terminal will show a message indicating it is listening for the actual joint angles: "FKSubscriber node initialized and listening for joint angles."
 3. Node 3 - Joint Angle Command Publisher.
-    - a. Open a new terminal window.
-    - b. source install/setup.bash
-    - c. ros2 run project_two joint_angle_publisher.py
-    - d. The commanded joint angles will be printed to the terminal window.
+    - Open a new terminal window.
+    - source install/setup.bash
+    - ros2 run project_two joint_angle_publisher.py
+    - The commanded joint angles will be printed to the terminal window.
 View the RViz and Gazebo windows to watch the robot arm maneuver to sketch the Gazebo scene. The RViz window will also plot the path of the end effector in realtime. 
 
 
