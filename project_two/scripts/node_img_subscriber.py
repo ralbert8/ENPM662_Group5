@@ -86,11 +86,18 @@ def img_processing(img_file, plot_width_m=0.3, plot_height_m=0.3, x_value=0.5):
     
     # Save plot of planned contour trajectory for artifacts
     plt.plot(yplan, zplan)
-    plt.title("Planned Contour Trajectory")
+    plt.title("Ground Truth Stenciled Image")
     plt.xlabel("Y-axis")
     plt.ylabel("Z-axis")
-    plt.savefig('planned_contour_traj.png')
-
+    plt.xlim(-0.01,0.1)
+    plt.savefig('GT_stencil.png')
+    
+    # Blank plot background for Validation
+    plt.axis('off')
+    plt.title('') #remove title
+    plt.savefig("GT_stencil_for_Validation.png", bbox_inches='tight', pad_inches=0)
+    
+    
     # Write Contours to CSV
     with open(output_csv_path, mode='w', newline='') as file:
         writer = csv.writer(file)

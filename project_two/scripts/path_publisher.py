@@ -6,6 +6,8 @@ from std_msgs.msg import Float64MultiArray
 from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Path
 import numpy as n
+import matplotlib.pyplot as plt
+import os
 
 class FKSubscriber(Node):
     def __init__(self):
@@ -25,6 +27,11 @@ class FKSubscriber(Node):
         self.path_msg = Path()
         self.path_msg.header.frame_id = 'world'
         self.get_logger().info("FKSubscriber node initialized and listening for joint angles.")
+        
+        # End effector plot lists
+        self.x_list = []
+        self.y_list = []
+        self.z_list = []
 
     def forward_kinematics(self, joint_angles):
         joint_angles[3] = -joint_angles[3]
@@ -81,6 +88,10 @@ class FKSubscriber(Node):
 
         # Perform forward kinematics
         x, y, z = self.forward_kinematics(joint_angles)
+        if x > 0.480: #for Validation, omit end effector location when not on the canvas
+            self.x_list.append(x)
+            self.y_list.append(y)
+            self.z_list.append(z)
 
         # Create a PoseStamped message for the end-effector position
         pose = PoseStamped()
@@ -99,13 +110,55 @@ class FKSubscriber(Node):
         self.get_logger().info(f"Published end-effector position: x={x}, y={y}, z={z}")
 
 
+def plot_ee(node):
+    
+    ##########################
+    # Plot End Effector Path #
+    ##########################
+
+    # Plot Path in 3D Space
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot(node.y_list, node.x_list, node.z_list)
+    ax.set_xlabel('Y')
+    ax.set_ylabel('X')
+    ax.set_zlabel('Z')
+    ax.set_xlim([-0.01, 0.1]) #y-axis
+    ax.set_ylim([0.45, 0.52]) #x-axis
+    ax.set_zlim([0.95, 1.35])    #z-axis
+    plt.title("3D Actual End Effector Path")
+    plotname = "3D_Actual_EndEffector_Path.png"
+    plt.savefig(plotname)
+    plotpath = os.path.join(os.getcwd(),plotname)
+    print(f"\n\nFinished generating end effector actual trajectory to sketch the scene! See actual trajectory plot: {plotpath} \n\n\n")
+    plt.close(fig)
+
+    # Plot Path in 2D Space
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(node.y_list, node.z_list)
+    ax.set_xlabel('Y')
+    ax.set_ylabel('Z')
+    ax.set_xlim([-0.01, 0.1]) #y-axis
+    # ax.set_ylim([0.95, 1.35]) #z-axis
+    plt.title("2D Actual End Effector Path")
+    plotname = "2D_Actual_EndEffector_Path.png"
+    plt.savefig(plotname)
+    
+    # Blank plot background for Validation
+    plt.axis('off')
+    plt.title('') #remove title
+    plt.savefig("2D_Actual_Traj_for_Validation.png", bbox_inches='tight', pad_inches=0)
+    plt.close(fig)
+
+
 def main():
     rclpy.init()
     node = FKSubscriber()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
+    except KeyboardInterrupt:                
+        plot_ee(node) # Plot Actual End Effector Path                       
     finally:
         rclpy.shutdown()
 

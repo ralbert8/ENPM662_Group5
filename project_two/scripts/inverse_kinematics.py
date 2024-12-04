@@ -3,7 +3,7 @@
 import sympy as s
 import numpy as n
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+# from mpl_toolkits.mplot3d import Axes3D
 import csv
 import os
 from ament_index_python.packages import get_package_share_directory
@@ -305,15 +305,25 @@ ax.plot(y_plot, x_plot, z_plot)
 ax.set_xlabel('Y')
 ax.set_ylabel('X')
 ax.set_zlabel('Z')
-
-ax.set_xlim([0, 0.5])
-ax.set_ylim([0.3, 0.5])
-ax.set_zlim([1, 1.2])
-ax.legend()
+ax.set_xlim([-0.01, 0.1]) #y-axis
+ax.set_ylim([0.45, 0.52]) #x-axis
+ax.set_zlim([0.95, 1.35])    #z-axis
 plt.title("3D Commanded End Effector Path")
-# plt.show()
-
 plotname = "3D_Commanded_EndEffector_Path.png"
 plt.savefig(plotname)
 plotpath = os.path.join(os.getcwd(),plotname)
 print(f"\nFinished generating end effector planned trajectory to sketch the scene! See trajectory plot: {plotpath}")
+plt.close(fig)
+
+# Plot Path in 2D Space
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(y_plot, z_plot)
+ax.set_xlabel('Y')
+ax.set_ylabel('Z')
+ax.set_xlim([-0.01, 0.1]) #y-axis
+# ax.set_ylim([0.95, 1.35]) #z-axis
+plt.title("2D Commanded End Effector Path")
+plotname = "2D_Commanded_EndEffector_Path.png"
+plt.savefig(plotname)
+plt.close(fig)
