@@ -1,5 +1,5 @@
 # Project 2 ENPM662-Group 5 Riley Albert, Alex Hall and Carissa Arillo
-**Note: If you encounter issues running with the following instruction, scroll down to the next set of instructions with work-arounds in place. Some team members needed the work-around due to computer memory / software installation issues. 
+**Note: If you encounter issues running with the following instructions, scroll down to the next set of instructions with work-arounds in place. Some team members needed the work-around due to computer memory / processing speed limitations. 
 ## Rviz and Gazebo
 ### Utilize the Following Instructions to Properly Load Rviz and Gazebo:
 1. Source ROS using source /opt/ros/{ROS_DISTRO}/setup.bash
