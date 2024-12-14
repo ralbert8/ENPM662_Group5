@@ -1,0 +1,46 @@
+controller_manager:
+    ros__parameters:
+        update_rate: 1000
+        use_sim_time: true
+
+        joint_state_broadcaster:
+            type: joint_state_broadcaster/JointStateBroadcaster
+
+        position_controller:
+            type: position_controllers/JointGroupPositionController
+
+
+position_controller:
+    ros__parameters:
+        joints:
+            - hd_joint
+            - r_shldr_1_joint
+            - r_shldr_2_joint
+            - r_elb_1_joint
+            - r_elb_2_joint
+            - r_wst_joint
+            - l_shldr_1_joint
+            - l_shldr_2_joint
+            - l_elb_1_joint
+            - l_elb_2_joint
+            - l_wst_joint
+            - r_hp_1_joint
+            - r_hp_2_joint
+            - r_kn_joint
+            - r_ank_1_joint
+            - r_ank_2_joint
+            - r_str_joint
+            - r_wl_joint
+            - l_hp_1_joint
+            - l_hp_2_joint
+            - l_kn_joint
+            - l_ank_1_joint
+            - l_ank_2_joint
+            - l_str_joint
+            - l_wl_joint
+        interface_name: position
+        command_interfaces:
+            - position
+        state_interfaces:
+            - position
+

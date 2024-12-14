@@ -11,6 +11,12 @@ find_package(robot_state_publisher REQUIRED)
 find_package(xacro REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(ros2_control REQUIRED)
+find_package(rclpy REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(gazebo_ros REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -28,7 +34,8 @@ install(DIRECTORY
   meshes
   launch
   worlds
-  DESTINATION share/${humanoid}/
+  config
+  DESTINATION share/${PROJECT_NAME}/
 )
 
 install(
@@ -38,8 +45,8 @@ install(
 
 install(
   PROGRAMS
-  #launch/robot_description_publisher.py
-  DESTINATION lib/${humanoid}
+  launch/robot_description_publisher.py
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 ament_package()

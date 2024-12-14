@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<?xml version="1.0" ?>
+
 <robot
   name="humanoid" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="dummy_link"></link>
   <link
     name="base_link">
     <inertial>
@@ -44,6 +43,11 @@
       </geometry>
     </collision>
   </link>
+  <joint name="dummy_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="dummy_link"/>
+    <child link="base_link"/>
+  </joint>
   <link
     name="hd_link">
     <inertial>
@@ -486,7 +490,7 @@
     </collision>
   </link>
   <joint
-    name="l_shldr_2_joint"
+    name="l_shldr_1_joint"
     type="revolute">
     <origin
       xyz="0 0.2286 1.3655"
@@ -1547,4 +1551,198 @@
       effort="0"
       velocity="0" />
   </joint>
+
+  <!-- Start of Controllers -->
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+
+    <!-- Position Controller -->
+    <joint name="hd_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_shldr_1_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_shldr_2_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_elb_1_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>  
+    <joint name="r_elb_2_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_wst_joint">
+      <command_interface name="position">
+        <param name="min">-3.1416</param>
+        <param name="max">3.1416</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>  
+    <joint name="l_shldr_1_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_shldr_2_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_elb_1_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_elb_2_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_wst_joint">
+      <command_interface name="position">
+        <param name="min">-3.1416</param>
+        <param name="max">3.1416</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_hp_1_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_hp_2_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_kn_joint">
+      <command_interface name="position">
+        <param name="min">0</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_ank_1_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_ank_2_joint">
+      <command_interface name="position">
+        <param name="min">-0.7854</param>
+        <param name="max">0.7854</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_str_joint">
+      <command_interface name="position">
+        <param name="min">-3.1416</param>
+        <param name="max">3.1416</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="r_wl_joint">
+      <command_interface name="position">
+        <param name="min">-3.1416</param>
+        <param name="max">3.1416</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_hp_1_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_hp_2_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_kn_joint">
+      <command_interface name="position">
+        <param name="min">0</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_ank_1_joint">
+      <command_interface name="position">
+        <param name="min">-1.5708</param>
+        <param name="max">1.5708</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_ank_2_joint">
+      <command_interface name="position">
+        <param name="min">-0.7854</param>
+        <param name="max">0.7854</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_str_joint">
+      <command_interface name="position">
+        <param name="min">-3.1416</param>
+        <param name="max">3.1416</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="l_wl_joint">
+      <command_interface name="position">
+        <param name="min">-3.1416</param>
+        <param name="max">3.1416</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+  </ros2_control>
+
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find humanoid)/config/control.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+
+
 </robot>
