@@ -1,0 +1,1550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="humanoid" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="3.8031E-15 1.512E-16 1.2984"
+        rpy="0 0 0" />
+      <mass
+        value="21.211" />
+      <inertia
+        ixx="0.59044"
+        ixy="9.5223E-16"
+        ixz="-8.1947E-16"
+        iyy="0.32027"
+        iyz="-2.4854E-17"
+        izz="0.35359" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="hd_link">
+    <inertial>
+      <origin
+        xyz="6.163E-33 -2.6872E-18 -0.010583"
+        rpy="0 0 0" />
+      <mass
+        value="2.6062" />
+      <inertia
+        ixx="0.0090144"
+        ixy="-5.6248E-36"
+        ixz="1.8808E-34"
+        iyy="0.0090144"
+        iyz="-7.0394E-20"
+        izz="0.006936" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/hd_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/hd_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="hd_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 1.5433"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="hd_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="ldr_link">
+    <inertial>
+      <origin
+        xyz="-6.163E-33 -5.8746E-19 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.01287" />
+      <inertia
+        ixx="1.2109E-06"
+        ixy="3.729E-41"
+        ixz="-3.8729E-39"
+        iyy="1.2109E-06"
+        iyz="-5.9247E-37"
+        izz="1.0379E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/ldr_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/ldr_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ldr_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0.0762"
+      rpy="0 0 0" />
+    <parent
+      link="hd_link" />
+    <child
+      link="ldr_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="r_shldr_1_link">
+    <inertial>
+      <origin
+        xyz="-7.718E-06 -1.114E-18 -0.027669"
+        rpy="0 0 0" />
+      <mass
+        value="0.35613" />
+      <inertia
+        ixx="0.00074567"
+        ixy="-2.0209E-21"
+        ixz="-1.8635E-07"
+        iyy="0.00076353"
+        iyz="-8.8871E-21"
+        izz="0.00014594" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_shldr_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_shldr_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_shldr_1_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.2286 1.3655"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="r_shldr_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_shldr_2_link">
+    <inertial>
+      <origin
+        xyz="1.9512E-14 -0.084667 -1.4962E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.6963" />
+      <inertia
+        ixx="0.0021474"
+        ixy="-7.5583E-20"
+        ixz="4.6213E-21"
+        iyy="0.00053267"
+        iyz="-3.5916E-21"
+        izz="0.0021116" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_shldr_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_shldr_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_shldr_2_joint"
+    type="revolute">
+    <origin
+      xyz="0.00024399 0.0015837 -0.095467"
+      rpy="1.5708 0 0" />
+    <parent
+      link="r_shldr_1_link" />
+    <child
+      link="r_shldr_2_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_elb_1_link">
+    <inertial>
+      <origin
+        xyz="7.718E-06 3.1442E-17 -0.027669"
+        rpy="0 0 0" />
+      <mass
+        value="0.35613" />
+      <inertia
+        ixx="0.00074567"
+        ixy="5.3388E-21"
+        ixz="1.8635E-07"
+        iyy="0.00076353"
+        iyz="-2.4356E-20"
+        izz="0.00014594" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_elb_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_elb_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_elb_1_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.18415 0"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="r_shldr_2_link" />
+    <child
+      link="r_elb_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_elb_2_link">
+    <inertial>
+      <origin
+        xyz="5.5511E-17 -0.052122 3.8005E-18"
+        rpy="0 0 0" />
+      <mass
+        value="0.3488" />
+      <inertia
+        ixx="0.00059507"
+        ixy="4.3132E-20"
+        ixz="-4.1359E-22"
+        iyy="0.00028045"
+        iyz="-1.3932E-20"
+        izz="0.00055932" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_elb_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_elb_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_elb_2_joint"
+    type="revolute">
+    <origin
+      xyz="-0.00024399 -0.0015837 -0.095467"
+      rpy="1.5708 0 0" />
+    <parent
+      link="r_elb_1_link" />
+    <child
+      link="r_elb_2_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="-1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_wst_link">
+    <inertial>
+      <origin
+        xyz="-5.5511E-17 -2.1696E-19 0.051891"
+        rpy="0 0 0" />
+      <mass
+        value="0.41185" />
+      <inertia
+        ixx="0.00061222"
+        ixy="-5.6874E-21"
+        ixz="5.8139E-20"
+        iyy="0.00061222"
+        iyz="-3.9234E-20"
+        izz="0.00024492" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_wst_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_wst_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_wst_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.1905 0"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="r_elb_2_link" />
+    <child
+      link="r_wst_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1416"
+      upper="3.1416"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_shldr_1_link">
+    <inertial>
+      <origin
+        xyz="-7.718E-06 -1.1543E-18 -0.027669"
+        rpy="0 0 0" />
+      <mass
+        value="0.35613" />
+      <inertia
+        ixx="0.00074567"
+        ixy="4.8799E-23"
+        ixz="-1.8635E-07"
+        iyy="0.00076353"
+        iyz="-1.1038E-20"
+        izz="0.00014594" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_shldr_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_shldr_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_shldr_2_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.2286 1.3655"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="l_shldr_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_shldr_2_link">
+    <inertial>
+      <origin
+        xyz="1.9151E-14 -0.084667 1.6263E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.6963" />
+      <inertia
+        ixx="0.0021474"
+        ixy="7.1655E-19"
+        ixz="8.0873E-21"
+        iyy="0.00053267"
+        iyz="-1.4351E-20"
+        izz="0.0021116" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_shldr_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_shldr_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_shldr_2_joint"
+    type="revolute">
+    <origin
+      xyz="0.00024399 0.0015837 -0.095467"
+      rpy="1.5708 0 0" />
+    <parent
+      link="l_shldr_1_link" />
+    <child
+      link="l_shldr_2_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_elb_1_link">
+    <inertial>
+      <origin
+        xyz="-7.718E-06 -1.6697E-17 -0.027669"
+        rpy="0 0 0" />
+      <mass
+        value="0.35613" />
+      <inertia
+        ixx="0.00074567"
+        ixy="-6.7096E-22"
+        ixz="-1.8635E-07"
+        iyy="0.00076353"
+        iyz="-7.5275E-21"
+        izz="0.00014594" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_elb_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_elb_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_elb_1_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.18415 0"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="l_shldr_2_link" />
+    <child
+      link="l_elb_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_elb_2_link">
+    <inertial>
+      <origin
+        xyz="-2.7756E-17 -0.052122 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.3488" />
+      <inertia
+        ixx="0.00059507"
+        ixy="-5.2112E-20"
+        ixz="-1.6544E-21"
+        iyy="0.00028045"
+        iyz="3.0486E-21"
+        izz="0.00055932" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_elb_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_elb_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_elb_2_joint"
+    type="revolute">
+    <origin
+      xyz="0.00024399 0.0015837 -0.095467"
+      rpy="1.5708 0 0" />
+    <parent
+      link="l_elb_1_link" />
+    <child
+      link="l_elb_2_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_wst_link">
+    <inertial>
+      <origin
+        xyz="5.5511E-17 8.6736E-19 0.051891"
+        rpy="0 0 0" />
+      <mass
+        value="0.41185" />
+      <inertia
+        ixx="0.00061222"
+        ixy="-3.8705E-21"
+        ixz="5.4194E-20"
+        iyy="0.00061222"
+        iyz="3.9778E-20"
+        izz="0.00024492" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_wst_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_wst_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_wst_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.1905 0"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="l_elb_2_link" />
+    <child
+      link="l_wst_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1416"
+      upper="3.1416"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_hp_1_link">
+    <inertial>
+      <origin
+        xyz="0.00024877 -0.053648 0.000127"
+        rpy="0 0 0" />
+      <mass
+        value="0.65765" />
+      <inertia
+        ixx="0.0012068"
+        ixy="-1.6847E-07"
+        ixz="-6.4984E-21"
+        iyy="0.00074697"
+        iyz="-3.7908E-20"
+        izz="0.0012307" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_hp_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_hp_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_hp_1_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.1022 1.0549"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="r_hp_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_hp_2_link">
+    <inertial>
+      <origin
+        xyz="1.0766E-16 -0.16129 -2.2204E-16"
+        rpy="0 0 0" />
+      <mass
+        value="2.3091" />
+      <inertia
+        ixx="0.018755"
+        ixy="2.2914E-19"
+        ixz="-6.1207E-21"
+        iyy="0.0028914"
+        iyz="2.5905E-18"
+        izz="0.018839" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_hp_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_hp_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_hp_2_joint"
+    type="revolute">
+    <origin
+      xyz="0.00024399 -0.10817 0.000127"
+      rpy="0 1.5708 0" />
+    <parent
+      link="r_hp_1_link" />
+    <child
+      link="r_hp_2_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_kn_link">
+    <inertial>
+      <origin
+        xyz="-4.8765E-16 -0.12013 -1.1616E-14"
+        rpy="0 0 0" />
+      <mass
+        value="1.6405" />
+      <inertia
+        ixx="0.0082386"
+        ixy="-3.646E-20"
+        ixz="6.8971E-21"
+        iyy="0.0022087"
+        iyz="4.4528E-20"
+        izz="0.0082315" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_kn_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_kn_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_kn_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.31824 0"
+      rpy="0 0 0" />
+    <parent
+      link="r_hp_2_link" />
+    <child
+      link="r_kn_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_ank_1_link">
+    <inertial>
+      <origin
+        xyz="0 -3.9653E-06 -0.028529"
+        rpy="0 0 0" />
+      <mass
+        value="0.79193" />
+      <inertia
+        ixx="0.0020261"
+        ixy="1.4945E-20"
+        ixz="-1.3416E-19"
+        iyy="0.0019196"
+        iyz="-2.102E-07"
+        izz="0.00077447" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_ank_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_ank_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_ank_1_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.24599 0"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="r_kn_link" />
+    <child
+      link="r_ank_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_ank_2_link">
+    <inertial>
+      <origin
+        xyz="-0.091402 -0.087623 -2.7756E-17"
+        rpy="0 0 0" />
+      <mass
+        value="2.8526" />
+      <inertia
+        ixx="0.0058988"
+        ixy="-0.0019208"
+        ixz="-1.9762E-18"
+        iyy="0.023453"
+        iyz="1.9261E-19"
+        izz="0.024534" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_ank_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_ank_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_ank_2_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.00024399 -0.095467"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="r_ank_1_link" />
+    <child
+      link="r_ank_2_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.7854"
+      upper="0.7854"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_str_link">
+    <inertial>
+      <origin
+        xyz="0 0 -0.05324"
+        rpy="0 0 0" />
+      <mass
+        value="0.92887" />
+      <inertia
+        ixx="0.0021692"
+        ixy="2.6933E-20"
+        ixz="-2.5171E-20"
+        iyy="0.0022717"
+        iyz="-9.47E-21"
+        izz="0.0011212" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_str_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_str_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_str_joint"
+    type="revolute">
+    <origin
+      xyz="-0.127 -0.14439 0"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="r_ank_2_link" />
+    <child
+      link="r_str_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1416"
+      upper="3.1416"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="r_wl_link">
+    <inertial>
+      <origin
+        xyz="0 0 -1.3878E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.064271" />
+      <inertia
+        ixx="2.1439E-05"
+        ixy="-2.5021E-38"
+        ixz="1.6141E-22"
+        iyy="2.1439E-05"
+        iyz="3.8564E-22"
+        izz="3.6458E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_wl_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/r_wl_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_wl_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.11092"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="r_str_link" />
+    <child
+      link="r_wl_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1416"
+      upper="3.1416"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_hp_1_link">
+    <inertial>
+      <origin
+        xyz="0.00024877 -0.053648 0.000127"
+        rpy="0 0 0" />
+      <mass
+        value="0.65765" />
+      <inertia
+        ixx="0.0012068"
+        ixy="-1.6847E-07"
+        ixz="3.8204E-21"
+        iyy="0.00074697"
+        iyz="-2.6622E-19"
+        izz="0.0012307" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_hp_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_hp_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_hp_1_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.1022 1.0549"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="l_hp_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_hp_2_link">
+    <inertial>
+      <origin
+        xyz="-1.3553E-17 -0.16129 8.0769E-15"
+        rpy="0 0 0" />
+      <mass
+        value="2.3091" />
+      <inertia
+        ixx="0.018755"
+        ixy="9.5821E-20"
+        ixz="-1.5705E-20"
+        iyy="0.0028914"
+        iyz="-1.1135E-16"
+        izz="0.018839" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_hp_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_hp_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_hp_2_joint"
+    type="revolute">
+    <origin
+      xyz="0.00024399 -0.10817 0.000127"
+      rpy="0 1.5708 0" />
+    <parent
+      link="l_hp_1_link" />
+    <child
+      link="l_hp_2_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_kn_link">
+    <inertial>
+      <origin
+        xyz="-1.1867E-16 -0.12013 4.1633E-17"
+        rpy="0 0 0" />
+      <mass
+        value="1.6405" />
+      <inertia
+        ixx="0.0082386"
+        ixy="-9.2755E-21"
+        ixz="1.8323E-20"
+        iyy="0.0022087"
+        iyz="4.895E-19"
+        izz="0.0082315" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_kn_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_kn_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_kn_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.31824 0"
+      rpy="0 0 0" />
+    <parent
+      link="l_hp_2_link" />
+    <child
+      link="l_kn_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_ank_1_link">
+    <inertial>
+      <origin
+        xyz="0 3.9653E-06 -0.028529"
+        rpy="0 0 0" />
+      <mass
+        value="0.79193" />
+      <inertia
+        ixx="0.0020261"
+        ixy="2.5897E-21"
+        ixz="1.3284E-20"
+        iyy="0.0019196"
+        iyz="2.102E-07"
+        izz="0.00077447" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_ank_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_ank_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_ank_1_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.24599 0"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="l_kn_link" />
+    <child
+      link="l_ank_1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_ank_2_link">
+    <inertial>
+      <origin
+        xyz="-0.091402 -0.087623 -2.276E-15"
+        rpy="0 0 0" />
+      <mass
+        value="2.8526" />
+      <inertia
+        ixx="0.0058988"
+        ixy="-0.0019208"
+        ixz="2.2866E-19"
+        iyy="0.023453"
+        iyz="4.7738E-19"
+        izz="0.024534" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_ank_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_ank_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_ank_2_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.00024399 -0.095467"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="l_ank_1_link" />
+    <child
+      link="l_ank_2_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.7854"
+      upper="0.7854"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_str_link">
+    <inertial>
+      <origin
+        xyz="0 0 -0.05324"
+        rpy="0 0 0" />
+      <mass
+        value="0.92887" />
+      <inertia
+        ixx="0.0021692"
+        ixy="1.0072E-20"
+        ixz="-2.7816E-20"
+        iyy="0.0022717"
+        iyz="-1.2466E-20"
+        izz="0.0011212" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_str_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_str_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_str_joint"
+    type="revolute">
+    <origin
+      xyz="-0.127 -0.14439 0"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="l_ank_2_link" />
+    <child
+      link="l_str_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1416"
+      upper="3.1416"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l_wl_link">
+    <inertial>
+      <origin
+        xyz="-2.7756E-17 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.064271" />
+      <inertia
+        ixx="2.1439E-05"
+        ixy="-1.3576E-36"
+        ixz="2.4451E-22"
+        iyy="2.1439E-05"
+        iyz="-8.9033E-22"
+        izz="3.6458E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_wl_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://humanoid/meshes/l_wl_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_wl_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.11092"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="l_str_link" />
+    <child
+      link="l_wl_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1416"
+      upper="3.1416"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>
