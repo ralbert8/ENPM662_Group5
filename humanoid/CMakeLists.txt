@@ -12,12 +12,6 @@ find_package(xacro REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(ros2_control REQUIRED)
-find_package(rclpy REQUIRED)
-find_package(sensor_msgs REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(gazebo_ros REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -36,7 +30,7 @@ install(DIRECTORY
   launch
   worlds
   config
-  src
+  rviz
   DESTINATION share/${PROJECT_NAME}/
 )
 
@@ -50,25 +44,5 @@ install(
   launch/robot_description_publisher.py
   DESTINATION lib/${PROJECT_NAME}
 )
-
-add_library(odometry_plugin SHARED
-  src/odometry_plugin.cpp
-)
-
-target_include_directories(odometry_plugin PUBLIC include)
-
-ament_target_dependencies(odometry_plugin
-  "gazebo_ros"
-  "nav_msgs"
-  "tf2_ros"
-)
-
-ament_export_libraries(odometry_plugin)
-
-install(TARGETS
-  odometry_plugin
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
 
 ament_package()

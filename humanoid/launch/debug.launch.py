@@ -21,7 +21,7 @@ def generate_launch_description():
     world = os.path.join(
         get_package_share_directory('humanoid'),
         'worlds',
-        'empty.world'
+        'empty_world.world'
     )
 
     # Launch Description to run Gazebo Server
@@ -54,7 +54,7 @@ def generate_launch_description():
 
      # RVIZ Configuration
     rviz_config_dir = PathJoinSubstitution(
-        [FindPackageShare("humanoid"), "rviz", "display_part1.rviz"]
+        [FindPackageShare("humanoid"), "rviz", "display_default.rviz"]
     )
 
     rviz_node = Node(
@@ -62,8 +62,8 @@ def generate_launch_description():
         executable='rviz2',
         output='screen',
         name='rviz_node',
-        parameters=[{'use_sim_time': True}]) #,
-        # arguments=['-d', rviz_config_dir])
+        parameters=[{'use_sim_time': True}],
+        arguments=['-d', rviz_config_dir])
 
     
 

@@ -67,87 +67,96 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        back_left_axle:
+        back:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        back_left_tire:
+        back_left_axel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        back_right_axle:
+        back_left_lidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        back_right_tire:
+        back_left_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        base:
+        back_right_axel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_left_axle:
+        back_right_lidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_left_tire:
+        back_right_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_right_axle:
+        base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_right_tire:
+        dummy_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        front:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_steer:
+        front_left_axel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lidar:
+        front_left_lidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_steer:
+        front_left_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        trailer:
+        front_right_axel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        trailer_left_axle:
+        front_right_lidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        trailer_left_tire:
+        front_right_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        trailer_right_axle:
+        left:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        trailer_right_tire:
+        right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        top:
           Alpha: 1
           Show Axes: false
           Show Trail: false
