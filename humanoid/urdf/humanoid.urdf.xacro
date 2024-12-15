@@ -1800,12 +1800,12 @@
         <stddev>0.01</stddev>
       </noise>
     </ray>
-    <plugin name="scan" filename="libgazebo_ros_ray_sensor.so">
+    <plugin name="scan_1" filename="libgazebo_ros_ray_sensor.so">
       <ros>
         <remapping>~/out:=scan</remapping>
       </ros>
       <output_type>sensor_msgs/LaserScan</output_type>
-      <frame_name>add_name_of_your_link</frame_name>
+      <frame_name>ldr_link</frame_name>
     </plugin>
   </sensor>
   </gazebo>
