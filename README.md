@@ -7,6 +7,6 @@ colcon build
 
 2. In the same terminal window in the root workspace, start RViz and Gazebo:
 source install/setup.bash
-ros2 launch humanoid debug_empty.launch.py
+ros2 launch humanoid debug.launch.py
 
 
