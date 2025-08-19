@@ -1,39 +1,74 @@
-# ENPM662-Group 5 Riley Albert, Alex Hall and Carissa Arillo
-%% Part 1 Teleop:
-If you place the config file in the <root workspace>/install/project_one/share/project_one/rviz/ folder, then the LaserScan will be setup correctly upon starting up Rviz with the display_part1.launch.py file. 
+# 🏫 ENPM662-Group 5 Riley Albert, Alex Hall and Carissa Arillo
 
-To run part 1, do the following:
+This ROS2 package demonstrates **teleoperation and proportional control** of a **custom-designed** toy car with a trailer designed in **SolidWorks**
+
+---
+
+## 🕹️ Teleoperation
+
+If the config file is placed in the <root workspace>/install/project_one/share/project_one/rviz/ folder, the LaserScan will be setup correctly upon starting up Rviz with the display_part1.launch.py file. 
+
+Execution:
+
 1. In a terminal window in the root workspace, build the workspace:
+   
+```bash
 colcon build
+```
 
 2. In the same terminal window in the root workspace, start RViz and Gazebo:
+   
+```bash
 source install/setup.bash
 ros2 launch project_one debug_competition.launch.py
+```
 
-3. In another terminal in the root workspace, start the teleop node: 
+3. In another terminal in the root workspace, start the teleop node:
+```bash
 source install/setup.bash
 ros2 run project_one teleop.py
+```
 
-note: teleop will allow the user to operate the car in the arena using w,s,a,d, and q keys. 
+*Note: Teleop will allow the user to operate the car in the arena using w,s,a,d, and q keys.*
 
-%% Part 2 Proportional Control:
-To run part 2, do the following: 
+---
+
+## 🧠 Proportional Control:
+
+Execution:
+
 1. In a terminal window in the root workspace, build the workspace:
+
+```bash
 colcon build
+```
 
 2. In the same terminal window in the root workspace:
+
+```bash
 source install/setup.bash
 ros2 launch project_one debug_empty.launch.py
+```
 
-3. In another terminal window in the root workspace, start the pose_subscriber node:
+3. In another terminal window in the root workspace, start the `pose_subscriber` node:
+
+```bash
 source install/setup.bash
 ros2 run project_one pose_subscriber.py
+```
 
-4. In another terminal in the root workspace, start the closed loop control node: 
+4. In another terminal in the root workspace, start the closed loop control node:
+
+```bash
 source install/setup.bash
 ros2 run project_one proportional_controller.py
+```
 
-observe the movement of the car, when you ctrl + c in the terminal the plots will appear.
+Observe the movement of the car. When ctrl + c is entered in the terminal, the plots will appear.
 
-Additional note: 
-See youtube links in report for videos, part 2 is too big to copy to git. 
+---
+
+## 🎥 Execution
+
+- [Teleoperation](https://drive.google.com/file/d/1D8-hF6ZDiEbGhcGJF3loK9Fkj2LDi-zo/view?usp=sharing)
+- [Proportional Control](https://drive.google.com/file/d/1pltz6T_K9bOQBhY81XqEgg7sT0FY-u-M/view)
