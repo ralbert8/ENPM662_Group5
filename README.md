@@ -71,4 +71,4 @@ Observe the movement of the car. When ctrl + c is entered in the terminal, the p
 ## 🎥 Execution
 
 - [Teleoperation](https://drive.google.com/file/d/1D8-hF6ZDiEbGhcGJF3loK9Fkj2LDi-zo/view?usp=sharing)
-- [Proportional Control](https://drive.google.com/file/d/1pltz6T_K9bOQBhY81XqEgg7sT0FY-u-M/view?usp=sharing)
+- [Proportional Control](https://drive.google.com/file/d/1pltz6T_K9bOQBhY81XqEgg7sT0FY-u-M/view?usp=drive_link)
