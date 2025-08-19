@@ -14,37 +14,89 @@ from std_msgs.msg import String
 
 class ProportionalControlNode(Node):
 
+    """
+    Proportional controller for a front-steer / read-drive robot in ROS2.
+
+    Publishes steering angles to `/position_controller/commands` and wheel
+    linear velocities to `/velocity_controller/commands` while driving toward a fixed
+    goal (``_goal_x``, ``_goal_y``). It logs state and can plot commands/trajectory.
+
+    Attributes:
+        actual_x (float): Current x-position from odometry [m].
+        actual_y (float): Current y-position from odometry [m].
+        actual_theta (float): Current yaw/heading [rad].
+        actual_vel_x (float): Current x linear velocity [m/s].
+        actual_vel_y (float): Current y linear velocity [m/s].
+        k_v (float): Proportional gain for linear velocity.
+        k_t (float): Proportional gain for angular control.
+        _goal_x (float): Goal x-position [m].
+        _goal_y (float): Goal y-position [m].
+        _goal_reached (bool): Flag indicating goal completion.
+        L (float): Wheelbase [m].
+        r_wheel (float): Wheel radius [m].
+        joint_position_pub (Publisher): Publishes front steering angles to `/position_controller/commands`.
+        wheel_velocities_pub (Publisher): Publishes wheel linear velocities to `/velocity_controller/commands`.
+        goal_pub (Publisher): Publishes status to `/goal_flag`.
+        _mutex_cbg (MutuallyExclusiveCallbackGroup): Callback group for thread safety.
+        odom_sub (Subscription): Subscribes to `/odom` (PoseStamped).
+        vel_sub (Subscription): Subscribes to `/velocity` (Twist).
+        joint_positions (Float64MultiArray): Outgoing steering command buffer.
+        wheel_velocities (Float64MultiArray): Outgoing wheel velocity buffer.
+        steer_angles (list[float]): Commanded steering angles history [deg].
+        right_vels (list[float]): Right wheel velocities history [m/s].
+        left_vels (list[float]): Left wheel velocities history [m/s].
+        x_vals (list[float]): Logged x positions [m].
+        y_vals (list[float]): Logged y positions [m].
+        theta_vals (list[float]): Logged headings [deg].
+        t (list[datetime]): Timestamps for logged samples.
+        _timer (Timer): Control loop timer.
+    """
+
+
+    
     def __init__(self):
+
+        """
+        Initializes publishers, subscribers, timers, controller gains, and state.
+        """
+
+        # Inherit node capabilities
         super().__init__('proportional_control_node')
         
-        # Initialize robot parameters
+        # Initialize robot state
         self.actual_x     = 0.0
         self.actual_y     = 0.0
         self.actual_theta = 0
         self.actual_vel_x = 0.0
         self.actual_vel_y = 0.0
+
+        # Proportional control gains
         self.k_v          = 0.8
         self.k_t          = 2.8
+
+        # Goal coordinates
         self._goal_x      = 10.0
         self._goal_y      = 10.0
         self._goal_reached = False
-        self.L       = 38 * .0254 # convert to meters
-        self.r_wheel = (8/2) * .0254 # convert to meters
+
+        # Robot parameters
+        self.L       = 38 * .0254 # Wheelbase in meters
+        self.r_wheel = (8/2) * .0254 # Wheel radius in meters
         
         
-        #Publishers
+        # Publishers
         self.joint_position_pub   = self.create_publisher(Float64MultiArray, '/position_controller/commands', 10)
         self.wheel_velocities_pub = self.create_publisher(Float64MultiArray, '/velocity_controller/commands', 10)
         self.goal_pub             = self.create_publisher(String,            '/goal_flag', 10)
         
-        #Subscriber for odom data
+        # Subscribers (Mutually exclusive callback group for thread safety)
         self._mutex_cbg = MutuallyExclusiveCallbackGroup()
         self.odom_sub   = self.create_subscription(PoseStamped, '/odom',     self.odom_callback,     10, callback_group=self._mutex_cbg)
         self.vel_sub    = self.create_subscription(Twist,       '/velocity', self.velocity_callback, 10, callback_group=self._mutex_cbg)
 
-        # Initialize command methods and arrays to track robot    
-        self.joint_positions  = Float64MultiArray() #front-axle steering
-        self.wheel_velocities = Float64MultiArray() #rear-wheel drive
+        # Data for plotting  
+        self.joint_positions  = Float64MultiArray()
+        self.wheel_velocities = Float64MultiArray()
         self.steer_angles     = []
         self.right_vels       = []
         self.left_vels        = []
@@ -53,39 +105,63 @@ class ProportionalControlNode(Node):
         self.theta_vals       = []
         self.t                = []  
         
-        #timer
+        # Timer for regular control loop
         self._timer = self.create_timer(0.1, self.timer_callback)
 
+
+    
     def odom_callback(self, msg: PoseStamped):
+
+        """
+        Update the robot's actual position and orientation from `PoseStamped` message.
+
+        Parameters:
+            msg (PoseStamped): Pose message with position and orientation (quaternion).
+        """
         
         self.actual_x = msg.pose.position.x
         self.actual_y = msg.pose.position.y
-        
-        ort = msg.pose.orientation   # orentation message
-        #quaternion conversion to get yaw angle of car
+        ort = msg.pose.orientation
+
+        # Convert quaternion to yaw angle
         self.actual_theta = math.atan2(2 * (ort.w * ort.z + ort.x * ort.y), 1 - 2 * (ort.y**2 + ort.z**2)) 
-        
+
+
+    
     def velocity_callback(self, msg: Twist):
+
+        """
+        Update robot linear velocity from a `Twist` message.
+
+        Parameters:
+            msg (Twist): Velocity message. Uses `linear.x` and `linear.y` [m/s]/
+        """
+        
         self.actual_vel_x = msg.linear.x
         self.actual_vel_y = msg.linear.y
+
+
     
     def timer_callback(self):
-        """
-        Send a linear/steering velocity to the robot every X seconds
-        """       
-        print("\n")
         
+        """
+        Periodic control loop that decides whether to stop or adjust motion
+        based on distance to goal and overshoot bounds.
+        """ 
+        
+        print("\n")
+
+        # If goal is reached
         if self._goal_reached:
             self.get_logger().info("Goal already reached. Press ctrl+c to exit and plot.")
             return
 
-        # self.get_logger().info(f"Executing goal: ({self._goal_x},{self._goal_y})")
-
-        while rclpy.ok():  # While ROS is running
+        # While ROS is running
+        while rclpy.ok():
             
             distance_to_goal = math.sqrt((self._goal_x - self.actual_x) ** 2 + (self._goal_y - self.actual_y) ** 2)
-            # print("Distance to goal: ",distance_to_goal)
-            
+
+            # Stop if within tolerance or overshoot margin
             if distance_to_goal < .5:
                 self.stop_robot()
                 return
@@ -95,7 +171,9 @@ class ProportionalControlNode(Node):
                 return
             else:
                 self.adjust_robot_motion()
-        
+
+
+    
     def compute_distance_to_goal(self):
         """
         Compute the distance to the goal
@@ -109,7 +187,9 @@ class ProportionalControlNode(Node):
         max_wheel_velocity = 10
         
         return min(dist, max_wheel_velocity)
-        
+
+
+    
     def calculate_angular_velocity(self, angle_to_goal):
         """
         Calculate the angular velocity based on the angle to the goal
@@ -143,6 +223,8 @@ class ProportionalControlNode(Node):
             angular_velocity = -max_steering_angle
             
         return angular_velocity
+
+
     
     def stop_robot(self):
         """
@@ -183,7 +265,8 @@ class ProportionalControlNode(Node):
         msg.data = "******************************************"
         self.goal_pub.publish(msg)
         self.get_logger().info('Publishing: "%s"' % msg.data)
-        
+
+    
         
     def adjust_robot_motion(self):  
         """
@@ -229,6 +312,8 @@ class ProportionalControlNode(Node):
         self.get_logger().info(f'Publishing Velocity Command: {list(self.wheel_velocities.data)}')
         self.get_logger().info(f'Publishing Steering Command: {list(self.joint_positions.data)}')
 
+
+    
     def plot_pose(self):
         """
         plot data regarding robot control / travel
@@ -267,7 +352,8 @@ class ProportionalControlNode(Node):
         plt.savefig("part2_pose_plot.png")
         plt.show()
 
-       
+
+
 def main(args=None):
     
     """
@@ -291,6 +377,8 @@ def main(args=None):
         node.plot_pose()
     finally:
         node.destroy_node()
-        
+
+
+
 if __name__ == '__main__':
     main()
