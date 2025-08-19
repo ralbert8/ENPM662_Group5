@@ -12,31 +12,76 @@ from std_msgs.msg import String
 
 class PoseSubscriber(Node):
 
+    """
+    A ROS2 node that subscribes to steering commands, wheel velocity commands, and goal completion flags.
+
+    Logs received data over time and plots:
+    - Commanded steering angles
+    - Commanded left and right wheel velocities
+
+    A plot is generated and saved automatically when a goal completion message is received.
+    """
+
+    
+    
     def __init__(self):
+
+        """
+        Initializes the subscriber node, sets up subscriptions with mutually exclusive callback groups,
+        and prepares data containers for plotting.
+        """
+
+        # Inherit node capabilities
         super().__init__('pose_subscriber_node')
         
-        # Initialize robot parameters
+        # Initialize placeholders for current velocities
         self.actual_vel_theta = 0
         self.actual_vel_x     = 0.0
         self.actual_vel_y     = 0.0
         
-        #Subscribers
+        # Set up a mutually exclusive callback group for thread-safe execution
         self._mutex_cbg           = MutuallyExclusiveCallbackGroup()
-        self.joint_position_sub   = self.create_subscription(Float64MultiArray, '/position_controller/commands', self.joint_position_cb,   10, callback_group=self._mutex_cbg)
-        self.wheel_velocities_sub = self.create_subscription(Float64MultiArray, '/velocity_controller/commands', self.wheel_velocities_cb, 10, callback_group=self._mutex_cbg)
-        self.goal_sub             = self.create_subscription(String,            '/goal_flag',                    self.goal_cb,             10, callback_group=self._mutex_cbg)
+
+        # Subscriptions
+        self.joint_position_sub   = self.create_subscription(
+            Float64MultiArray,
+            '/position_controller/commands',
+            self.joint_position_cb,
+            10,
+            callback_group=self._mutex_cbg)
         
-        # Initialize command methods and arrays to track robot    
-        self.theta_vels = []
-        self.right_vels = []
-        self.left_vels  = []
-        self.t_theta    = []
-        self.t_vel      = []
+        self.wheel_velocities_sub = self.create_subscription(
+            Float64MultiArray,
+            '/velocity_controller/commands',
+            self.wheel_velocities_cb,
+            10,
+            callback_group=self._mutex_cbg)
+       
+        self.goal_sub = self.create_subscription(
+            String,
+            '/goal_flag',
+            self.goal_cb,
+            10,
+            callback_group=self._mutex_cbg)
         
+        # Data containers for logging
+        self.theta_vels = [] # Steering angle commands
+        self.right_vels = [] # Right wheel velocity commands
+        self.left_vels  = [] # Left wheel velocity commands
+        self.t_theta    = [] # Timestamps for steering angles
+        self.t_vel      = [] # Timestamps for velocity commands
+
+
+    
     def joint_position_cb(self, msg: Float64MultiArray):
+        
         """
-        Subscriber c/b to steering commands
+        Callback for receiving steering commands from the `/position_controller/commands topic.
+
+        Parameters:
+            msg (std_msgs.msg.Float64MultiArray): Contains the commanded steering angle.
         """
+        
         self.get_logger().info(f'Received Steering Command: {msg.data[0]}')
         self.theta_vels.append(msg.data[0])
         self.t_theta.append(datetime.now())
