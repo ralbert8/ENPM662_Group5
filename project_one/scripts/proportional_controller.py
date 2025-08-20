@@ -174,13 +174,16 @@ class ProportionalControlNode(Node):
 
 
     
-    def compute_distance_to_goal(self):
+    def compute_distance_to_goal(self) -> float:
+        
         """
-        Compute the distance to the goal
+        Compute Euclidean distance from current position to goal.
 
         Returns:
-            float: Distance to the goal
-        """        
+            float: Distance to the goal. Capped at 10 to avoid runaway commands.
+        """
+
+        # Compute Euclidean distance to goal
         dist = math.sqrt(
             (self._goal_x - self.actual_x) ** 2 + (self._goal_y - self.actual_y) ** 2
         )
@@ -191,15 +194,17 @@ class ProportionalControlNode(Node):
 
     
     def calculate_angular_velocity(self, angle_to_goal):
+        
         """
-        Calculate the angular velocity based on the angle to the goal
+        Compute bounded angular command toward target heading
 
-        Args:
-            angle_to_goal (float): Angle to the goal
+        Parameters:
+            angle_to_goal (float): Absolute angle from robot pose to goal.
 
         Returns:
-            float: Angular velocity
+            float: Angular error bounded by +/- 45 degrees to avoid unrealistic steering.
         """
+        
         max_steering_angle = np.radians(45)
         
         # Adjust angle to ensure proper rotation direction
@@ -227,24 +232,29 @@ class ProportionalControlNode(Node):
 
     
     def stop_robot(self):
-        """
-        stop the robot
-        """
         
+        """
+        stop the robot and publish final commands and goal-status message.
+        """
+
+        # Set goal reached flag
         self._goal_reached=True
-    
+
+        # Stop and reset all robot motion
         steer_angle         = 0.0
         lin_vel_right_wheel = 0.0
         lin_vel_left_wheel  = 0.0
+
+        # Store current timestamp
         self.t.append(datetime.now())
+
+        # Store current robot pose information
         self.theta_vals.append(np.degrees(self.actual_theta))
         self.x_vals.append(self.actual_x)
         self.y_vals.append(self.actual_y)        
         self.steer_angles.append(np.degrees(steer_angle))
         self.right_vels.append(lin_vel_right_wheel)
         self.left_vels.append(-lin_vel_left_wheel)                
-        # print("Commanded Steering Angle: ",steer_angle)
-        # print("Commanded Right & Left Wheel Velocity: ",-lin_vel_right_wheel,", ",lin_vel_left_wheel)
         
         # Publish the stop commands
         self.wheel_velocities.data = [-lin_vel_left_wheel,lin_vel_right_wheel]
@@ -269,31 +279,39 @@ class ProportionalControlNode(Node):
     
         
     def adjust_robot_motion(self):  
+        
         """
-        make incremental adjustments to robot velocity and heading
+        Compute and publish steering and velocity commands using proportional control.
         """              
                 
-        # ODOM Postion error calculations
-        # print("Robot Position X: ", self.actual_x)
-        # print("Robot Position Y: ", self.actual_y)
+        # Compute linear error
         lin_vel_err_mag = self.compute_distance_to_goal()
-        
-        # print("Robot Heading Angle [degrees]: ", np.degrees(self.actual_theta))
+
+        # Compute components of linear error
         dy= self._goal_y - self.actual_y
         dx= self._goal_x - self.actual_x
+
+        # Compute angle to goal
         angle_to_goal = math.atan2(dy, dx)
-        # print("Angle to Goal from Current Position [degrees]: ",np.degrees(angle_to_goal))
+
+        # Compute angular error
         theta_err = angle_to_goal- self.actual_theta
-        # print("Heading Error [degrees]: ",np.degrees(theta_err))
+
+        # Compute required angular velocity
         steer_angle_vel = self.calculate_angular_velocity(theta_err)
-        
+
+        # Perform proportional control
         prop_control_lin_vel = self.k_v * lin_vel_err_mag 
         prop_control_ang_vel = self.k_t * steer_angle_vel
+
+        # Adjust wheel velocities
         lin_vel_right_wheel = float((1 / self.r_wheel) * (prop_control_lin_vel + (self.L / 2) * prop_control_ang_vel))
         lin_vel_left_wheel  = float((1 / self.r_wheel) * (prop_control_lin_vel - (self.L / 2) * prop_control_ang_vel))
         
-                
+        # Store current timestamp        
         self.t.append(datetime.now())
+
+        # Store current robot pose information
         self.theta_vals.append(np.degrees(self.actual_theta))
         self.x_vals.append(self.actual_x)
         self.y_vals.append(self.actual_y)
@@ -301,12 +319,11 @@ class ProportionalControlNode(Node):
         self.right_vels.append(lin_vel_right_wheel)
         self.left_vels.append(-lin_vel_left_wheel)
 
-        # print("Commanded Steering Angle: ",np.degrees(prop_control_ang_vel))
-        # print("Commanded Right & Left Wheel Velocity: ",-prop_control_lin_vel,", ",prop_control_lin_vel)
-        # Publish the command
+        # Store wheel velocities and steering angles
         self.wheel_velocities.data = [-lin_vel_left_wheel,lin_vel_right_wheel] 
         self.joint_positions.data  = [prop_control_ang_vel,prop_control_ang_vel] 
 
+        # Publish commands
         self.joint_position_pub.publish(self.joint_positions)
         self.wheel_velocities_pub.publish(self.wheel_velocities)
         self.get_logger().info(f'Publishing Velocity Command: {list(self.wheel_velocities.data)}')
@@ -315,8 +332,9 @@ class ProportionalControlNode(Node):
 
     
     def plot_pose(self):
+        
         """
-        plot data regarding robot control / travel
+        Plot steering commands, orientation history, wheel velocities, and X-Y path.
         """
                     
         # Plot commanded positions / velocities over time
@@ -357,8 +375,10 @@ class ProportionalControlNode(Node):
 def main(args=None):
     
     """
-    Node operation - startup and shutdown, and plotting
-    
+    Entry point: Create and spin the node with a MultiThreadedExecutor.
+
+    Parameters:
+        args (list[str] | None, optional): Command line arguments to rclpy.init.
     """
     # Start Node and Controller
     print("******************************************")
