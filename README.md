@@ -42,7 +42,7 @@ Utilize the Following Instructions to Process the Image, Run Inverse Kinematics,
 1. Node 1 - Camera Image Subscriber. 
     - Open a new terminal window.
 
-      ```bash
+    - ```bash
       source install/setup.bash
       ros2 run project_two node_img_subscriber.py
       ```
